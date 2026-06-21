@@ -1,0 +1,119 @@
+.phero {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  padding: clamp(7rem, 12vw, 9rem) clamp(1rem, 4vw, 2.5rem) clamp(3rem, 5vw, 4rem);
+  font-family: var(--sans, system-ui, "Segoe UI", Roboto, sans-serif);
+  text-align: center;
+}
+
+.phero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(110% 90% at 85% 0%, rgba(200, 162, 74, 0.14), transparent 55%),
+    radial-gradient(110% 90% at 0% 100%, rgba(24, 73, 58, 0.1), transparent 55%),
+    linear-gradient(180deg, #fbfaf5 0%, #f3f6f2 100%);
+}
+.phero-pattern {
+  position: absolute;
+  inset: 0;
+  opacity: 0.4;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='84' height='84' viewBox='0 0 84 84'%3E%3Cg fill='none' stroke='%2318493a' stroke-opacity='0.16' stroke-width='1'%3E%3Crect x='24' y='24' width='36' height='36'/%3E%3Crect x='24' y='24' width='36' height='36' transform='rotate(45 42 42)'/%3E%3Ccircle cx='42' cy='42' r='3'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 84px 84px;
+  -webkit-mask-image: radial-gradient(120% 100% at 50% 20%, #000 30%, transparent 80%);
+  mask-image: radial-gradient(120% 100% at 50% 20%, #000 30%, transparent 80%);
+}
+.phero-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+}
+.phero-orb-1 {
+  width: 340px;
+  height: 340px;
+  top: -80px;
+  right: -60px;
+  background: radial-gradient(circle, rgba(200, 162, 74, 0.4), transparent 70%);
+}
+.phero-orb-2 {
+  width: 320px;
+  height: 320px;
+  bottom: -120px;
+  left: -80px;
+  background: radial-gradient(circle, rgba(24, 73, 58, 0.32), transparent 70%);
+}
+
+.phero-inner {
+  width: min(820px, 100%);
+  margin: 0 auto;
+  position: relative;
+}
+
+.phero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #18493a;
+  background: rgba(24, 73, 58, 0.08);
+  border: 1px solid rgba(24, 73, 58, 0.16);
+  padding: 0.45rem 0.95rem;
+  border-radius: 999px;
+}
+.phero-eyebrow-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #c8a24a;
+  box-shadow: 0 0 0 4px rgba(200, 162, 74, 0.25);
+}
+
+.phero-title {
+  margin: 1.2rem 0 0;
+  font-size: clamp(2.4rem, 5.2vw, 3.8rem);
+  line-height: 1.08;
+  letter-spacing: -1.6px;
+  font-weight: 700;
+  color: #0d3326;
+}
+.phero-sub {
+  margin: 1.1rem auto 0;
+  max-width: 38rem;
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: #6b7670;
+}
+
+.phero-badges {
+  list-style: none;
+  margin: 1.8rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.55rem;
+}
+.phero-badges li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #18493a;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(24, 73, 58, 0.14);
+  padding: 0.5rem 0.95rem;
+  border-radius: 999px;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+.phero-badges svg {
+  width: 14px;
+  height: 14px;
+  color: #c8a24a;
+}

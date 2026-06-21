@@ -1,0 +1,298 @@
+.ft {
+  --ft-emerald: #0d3326;
+  --ft-emerald-deep: #07251b;
+  --ft-emerald-soft: #14503a;
+  --ft-gold: #c8a24a;
+  --ft-gold-soft: #e7d29a;
+  --ft-text: #d4e1da;
+  --ft-muted: #8da59a;
+
+  position: relative;
+  margin-top: clamp(2rem, 5vw, 4rem);
+  padding: 0;
+  font-family: var(--sans, system-ui, "Segoe UI", Roboto, sans-serif);
+  color: var(--ft-text);
+}
+
+.ft-inner {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: 40px 40px 0 0;
+  padding: clamp(2.5rem, 5vw, 3.5rem) clamp(1.5rem, 4vw, 3rem) 1.25rem;
+  background:
+    radial-gradient(70% 60% at 90% 0%, rgba(200, 162, 74, 0.16), transparent 60%),
+    radial-gradient(60% 60% at 0% 100%, rgba(20, 80, 58, 0.45), transparent 60%),
+    linear-gradient(160deg, #0d3326 0%, #0a2a1f 60%, #07251b 100%);
+}
+
+/* Gold accent line at the very top */
+.ft-accent-top {
+  position: absolute;
+  top: 0;
+  left: 12%;
+  right: 12%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(200, 162, 74, 0.1) 15%,
+    var(--ft-gold) 50%,
+    rgba(200, 162, 74, 0.1) 85%,
+    transparent 100%
+  );
+}
+
+/* ---------- Brand row ---------- */
+.ft-brand {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: clamp(1.25rem, 4vw, 2.5rem);
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid rgba(200, 162, 74, 0.18);
+}
+.ft-logo {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  line-height: 0;
+}
+.ft-logo-panel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 0.15rem 0.35rem;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow:
+    0 14px 32px -14px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(200, 162, 74, 0.25);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.ft-logo:hover .ft-logo-panel {
+  transform: translateY(-2px);
+  box-shadow:
+    0 18px 38px -14px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(200, 162, 74, 0.45);
+}
+.ft-logo-panel img {
+  height: clamp(72px, 8vw, 96px);
+  width: auto;
+  display: block;
+  object-fit: contain;
+  /* logo-white.jpg has extra white margin — zoom in so the mark fills the panel */
+  transform: scale(1.35);
+  transform-origin: center;
+  margin: -6px -10px;
+}
+
+.ft-tagline {
+  margin: 0;
+  max-width: 36rem;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--ft-muted);
+}
+
+/* ---------- Columns ---------- */
+.ft-cols {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem 2rem;
+  padding-bottom: 2rem;
+}
+.ft-col {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.ft-col-title {
+  position: relative;
+  margin: 0 0 1rem;
+  padding-bottom: 0.55rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--ft-gold);
+  white-space: nowrap;
+}
+.ft-col-title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 22px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--ft-gold), transparent);
+}
+
+.ft-col-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.ft-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  font-size: 0.86rem;
+  color: var(--ft-text);
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+.ft-link-dash {
+  width: 10px;
+  height: 1.5px;
+  border-radius: 2px;
+  background: rgba(200, 162, 74, 0.45);
+  flex-shrink: 0;
+  transition: width 0.25s ease, background 0.25s ease;
+}
+.ft-link:hover {
+  color: var(--ft-gold-soft);
+  transform: translateX(2px);
+}
+.ft-link:hover .ft-link-dash {
+  width: 18px;
+  background: var(--ft-gold);
+}
+
+/* ---------- Contact column ---------- */
+.ft-contact-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.ft-contact-list li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  font-size: 0.86rem;
+}
+.ft-contact-list a,
+.ft-contact-list span:not(.ft-contact-label) {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  word-break: break-word;
+}
+.ft-contact-list a:hover {
+  color: var(--ft-gold-soft);
+}
+.ft-contact-label {
+  font-size: 0.68rem;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+  color: var(--ft-muted);
+  font-weight: 500;
+}
+
+/* ---------- Socials (in brand row) ---------- */
+.ft-socials {
+  display: flex;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.ft-social {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  color: var(--ft-gold-soft);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(200, 162, 74, 0.2);
+  transition: color 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+.ft-social svg {
+  width: 16px;
+  height: 16px;
+}
+.ft-social:hover {
+  color: var(--ft-emerald-deep);
+  background: linear-gradient(135deg, var(--ft-gold-soft), var(--ft-gold));
+  border-color: var(--ft-gold);
+}
+
+/* ---------- Bottom bar ---------- */
+.ft-bottom {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.9rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(200, 162, 74, 0.18);
+}
+.ft-bottom::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 50px;
+  height: 1px;
+  background: var(--ft-gold);
+}
+.ft-copy {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--ft-muted);
+}
+.ft-legal {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.1rem;
+}
+.ft-legal a {
+  font-size: 0.8rem;
+  color: var(--ft-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.ft-legal a:hover {
+  color: var(--ft-gold-soft);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .ft-brand {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    text-align: left;
+  }
+  .ft-cols {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.75rem;
+  }
+}
+@media (max-width: 520px) {
+  .ft-cols {
+    grid-template-columns: 1fr;
+  }
+  .ft-bottom {
+    justify-content: center;
+    text-align: center;
+  }
+  .ft-legal {
+    justify-content: center;
+  }
+}

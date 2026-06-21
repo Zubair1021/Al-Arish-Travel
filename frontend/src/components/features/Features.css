@@ -1,0 +1,131 @@
+.feats {
+  --f-green: #18493a;
+  --f-green-deep: #0d3326;
+  --f-gold: #c8a24a;
+  --f-ink: #3c4742;
+  --f-muted: #6b7670;
+
+  position: relative;
+  padding: clamp(4rem, 8vw, 7rem) clamp(1rem, 4vw, 2.5rem);
+  background: #f7f3ea;
+  font-family: var(--sans, system-ui, "Segoe UI", Roboto, sans-serif);
+  color: var(--f-ink);
+}
+
+.feats-inner {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+}
+
+/* ---------- Heading ---------- */
+.feats-head {
+  text-align: center;
+  max-width: 42rem;
+  margin: 0 auto clamp(2.5rem, 5vw, 3.5rem);
+}
+.feats-eyebrow {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--f-gold);
+}
+.feats-title {
+  margin: 0.7rem 0 0;
+  font-size: clamp(2rem, 4.6vw, 3.1rem);
+  line-height: 1.1;
+  letter-spacing: -1.2px;
+  font-weight: 700;
+  color: var(--f-green-deep);
+}
+.feats-sub {
+  margin: 1rem auto 0;
+  font-size: 1.02rem;
+  line-height: 1.6;
+  color: var(--f-muted);
+}
+
+/* ---------- Grid: 3 x 2 ---------- */
+.feats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+/* ---------- Card ---------- */
+.feat-card {
+  background: #fff;
+  border-radius: 24px;
+  padding: 2rem 1.6rem;
+  text-align: center;
+  border: 1px solid rgba(13, 51, 38, 0.05);
+  box-shadow: 0 10px 30px -18px rgba(13, 51, 38, 0.3);
+  transition: box-shadow 0.35s ease;
+  will-change: transform;
+}
+.feat-card:hover {
+  box-shadow: 0 26px 50px -22px rgba(13, 51, 38, 0.4);
+}
+
+.feat-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  margin-bottom: 1.25rem;
+  border-radius: 50%;
+  color: var(--f-green);
+  background: radial-gradient(
+    circle at 30% 25%,
+    rgba(200, 162, 74, 0.22),
+    rgba(24, 73, 58, 0.1)
+  );
+  box-shadow: inset 0 0 0 1px rgba(200, 162, 74, 0.3);
+  transition: color 0.35s ease, background 0.35s ease, box-shadow 0.35s ease;
+}
+.feat-icon svg {
+  width: 32px;
+  height: 32px;
+}
+.feat-card:hover .feat-icon {
+  color: #fff;
+  background: linear-gradient(135deg, var(--f-green), var(--f-green-deep));
+  box-shadow:
+    inset 0 0 0 1px rgba(200, 162, 74, 0.5),
+    0 12px 26px -12px rgba(13, 51, 38, 0.7);
+}
+
+.feat-title {
+  margin: 0 0 0.55rem;
+  font-size: 1.18rem;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  color: var(--f-green-deep);
+}
+.feat-desc {
+  margin: 0;
+  font-size: 0.94rem;
+  line-height: 1.6;
+  color: var(--f-muted);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 860px) {
+  .feats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 520px) {
+  .feats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .feat-card,
+  .feat-icon {
+    transition: none;
+  }
+}

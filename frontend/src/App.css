@@ -1,0 +1,10 @@
+main {
+  display: flex;
+  flex-direction: column;
+  padding-top: var(--nav-offset);
+}
+
+/* Home hero fills the viewport with navbar floating on top */
+main:has(.hero) {
+  padding-top: 0;
+}

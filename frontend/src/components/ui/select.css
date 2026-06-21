@@ -1,0 +1,223 @@
+/* =========================================================
+   Custom Select component
+   - .ui-select-public  → public website theme (cream + gold)
+   - .ui-select-admin   → admin portal theme (white + green)
+   ========================================================= */
+
+.ui-select {
+  position: relative;
+  width: 100%;
+  font-family: inherit;
+}
+
+.ui-select-trigger {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  font: inherit;
+  cursor: pointer;
+  user-select: none;
+  text-align: left;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+.ui-select-trigger:disabled,
+.ui-select.is-disabled .ui-select-trigger {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.ui-select-value {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ui-select-value.is-placeholder {
+  opacity: 0.55;
+  font-weight: 400;
+}
+
+.ui-select-caret {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+.ui-select.is-open .ui-select-caret {
+  transform: rotate(180deg);
+}
+
+/* ---------- Sizes ---------- */
+.ui-select-size-md .ui-select-trigger {
+  padding: 0.65rem 0.85rem;
+  font-size: 0.95rem;
+  min-height: 44px;
+}
+.ui-select-size-sm .ui-select-trigger {
+  padding: 0.45rem 0.7rem;
+  font-size: 0.85rem;
+  min-height: 36px;
+}
+
+/* ---------- Dropdown panel ---------- */
+.ui-select-pop {
+  z-index: 9999;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow:
+    0 24px 60px -22px rgba(13, 51, 38, 0.42),
+    0 4px 12px rgba(13, 51, 38, 0.08);
+  animation: ui-select-in 0.14s ease-out;
+  display: flex;
+  flex-direction: column;
+}
+.ui-select-pop.is-up {
+  transform-origin: bottom center;
+}
+
+@keyframes ui-select-in {
+  from { opacity: 0; transform: translateY(-4px) scale(0.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.ui-select-list {
+  list-style: none;
+  margin: 0;
+  padding: 6px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+.ui-select-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.55rem 0.7rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+.ui-select-option-label {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ui-select-option.is-selected {
+  font-weight: 600;
+}
+.ui-select-empty {
+  padding: 0.75rem 0.7rem;
+  font-size: 0.85rem;
+  color: #8a948f;
+  text-align: center;
+}
+
+/* ============================================================
+   PUBLIC theme — matches website cream + gold + green palette
+   ============================================================ */
+.ui-select-public .ui-select-trigger {
+  background: #f7f1e3;
+  border: 1px solid rgba(13, 51, 38, 0.16);
+  border-radius: 12px;
+  color: #0d3326;
+  font-weight: 500;
+}
+.ui-select-public .ui-select-trigger:hover:not(:disabled) {
+  border-color: rgba(200, 162, 74, 0.55);
+}
+.ui-select-public.is-open .ui-select-trigger,
+.ui-select-public .ui-select-trigger:focus-visible {
+  outline: none;
+  border-color: #c8a24a;
+  box-shadow: 0 0 0 3px rgba(200, 162, 74, 0.22);
+  background: #fffaf0;
+}
+.ui-select-public .ui-select-caret {
+  color: #6b7872;
+}
+
+.ui-select-pop.ui-select-public {
+  border: 1px solid rgba(13, 51, 38, 0.12);
+}
+.ui-select-pop.ui-select-public .ui-select-option {
+  color: #2a3833;
+}
+.ui-select-pop.ui-select-public .ui-select-option.is-active {
+  background: #f6efde;
+  color: #0d3326;
+}
+.ui-select-pop.ui-select-public .ui-select-option.is-selected {
+  color: #0d3326;
+}
+.ui-select-pop.ui-select-public .ui-select-option.is-selected.is-active {
+  background: linear-gradient(135deg, rgba(200, 162, 74, 0.18), rgba(200, 162, 74, 0.08));
+}
+.ui-select-pop.ui-select-public .ui-select-check {
+  color: #c8a24a;
+}
+
+/* ============================================================
+   ADMIN theme — clean white with deep-green focus accent
+   ============================================================ */
+.ui-select-admin .ui-select-trigger {
+  background: #ffffff;
+  border: 1px solid #e1e6e3;
+  border-radius: 10px;
+  color: #0d3326;
+  font-weight: 500;
+}
+.ui-select-admin .ui-select-trigger:hover:not(:disabled) {
+  border-color: rgba(13, 51, 38, 0.35);
+}
+.ui-select-admin.is-open .ui-select-trigger,
+.ui-select-admin .ui-select-trigger:focus-visible {
+  outline: none;
+  border-color: #18493a;
+  box-shadow: 0 0 0 3px rgba(24, 73, 58, 0.18);
+}
+.ui-select-admin .ui-select-caret {
+  color: #5c6661;
+}
+
+.ui-select-pop.ui-select-admin {
+  border: 1px solid #e1e6e3;
+}
+.ui-select-pop.ui-select-admin .ui-select-option {
+  color: #2a3833;
+}
+.ui-select-pop.ui-select-admin .ui-select-option.is-active {
+  background: #f1f6f3;
+  color: #0d3326;
+}
+.ui-select-pop.ui-select-admin .ui-select-option.is-selected {
+  color: #0d3326;
+}
+.ui-select-pop.ui-select-admin .ui-select-option.is-selected.is-active {
+  background: rgba(24, 73, 58, 0.1);
+}
+.ui-select-pop.ui-select-admin .ui-select-check {
+  color: #18493a;
+}
+
+/* Scrollbar polish */
+.ui-select-list::-webkit-scrollbar {
+  width: 8px;
+}
+.ui-select-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+.ui-select-list::-webkit-scrollbar-thumb {
+  background: rgba(13, 51, 38, 0.18);
+  border-radius: 8px;
+}
+.ui-select-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(13, 51, 38, 0.3);
+}
