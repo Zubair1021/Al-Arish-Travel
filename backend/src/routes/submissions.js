@@ -32,6 +32,13 @@ function validateBase(body) {
   if (!body.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(body.email))) {
     errors.push("A valid email is required");
   }
+  const phone = String(body.phone || "").trim();
+  const phoneDigits = phone.replace(/\D/g, "");
+  if (!phone) {
+    errors.push("Phone number is required");
+  } else if (phoneDigits.length < 7) {
+    errors.push("A valid phone number is required");
+  }
   return errors;
 }
 

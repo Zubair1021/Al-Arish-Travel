@@ -2,17 +2,37 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useSettings } from "../../context/SettingsContext";
 import { WhatsAppIcon, SparkIcon } from "../navbar/icons";
+import ctaMakkah from "../../assets/images/cta-makkah.jpg";
 import "./Cta.css";
 
-const shapes = [
-  { cls: "cta-shape cta-shape-1", anim: { y: [0, -26, 0], rotate: [0, 12, 0] }, dur: 12 },
-  { cls: "cta-shape cta-shape-2", anim: { y: [0, 24, 0], rotate: [0, -16, 0] }, dur: 15 },
-  { cls: "cta-shape cta-shape-3", anim: { y: [0, -18, 0], x: [0, 14, 0] }, dur: 17 },
-  { cls: "cta-shape cta-shape-4", anim: { y: [0, 20, 0], rotate: [0, 20, 0] }, dur: 14 },
+const orbs = [
+  { cls: "cta-orb cta-orb-1", anim: { y: [0, -22, 0], x: [0, 12, 0] }, dur: 14 },
+  { cls: "cta-orb cta-orb-2", anim: { y: [0, 18, 0], x: [0, -14, 0] }, dur: 16 },
+  { cls: "cta-orb cta-orb-3", anim: { y: [0, -14, 0], x: [0, 10, 0] }, dur: 12 },
 ];
+
+function CheckIcon() {
+  return (
+    <svg
+      className="cta-trust-icon"
+      viewBox="0 0 24 24"
+      width="12"
+      height="12"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="3"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <polyline points="5 12 10 17 19 7" />
+    </svg>
+  );
+}
 
 export default function Cta() {
   const { whatsappLink } = useSettings();
+
   return (
     <section id="cta" className="cta">
       <div className="cta-inner">
@@ -23,16 +43,32 @@ export default function Cta() {
           viewport={{ once: true, margin: "-80px" }}
           transition={{ type: "spring", stiffness: 200, damping: 26 }}
         >
-          <div className="cta-shapes" aria-hidden="true">
-            {shapes.map((s, i) => (
+          <div className="cta-media" aria-hidden="true">
+            <motion.img
+              src={ctaMakkah}
+              alt=""
+              className="cta-photo"
+              initial={{ scale: 1.08 }}
+              whileInView={{ scale: 1.14 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 18, ease: "easeOut" }}
+              loading="lazy"
+              decoding="async"
+            />
+            <span className="cta-overlay" />
+            <span className="cta-vignette" />
+            <span className="cta-pattern" />
+          </div>
+
+          <div className="cta-orbs" aria-hidden="true">
+            {orbs.map((o, i) => (
               <motion.span
                 key={i}
-                className={s.cls}
-                animate={s.anim}
-                transition={{ duration: s.dur, repeat: Infinity, ease: "easeInOut" }}
+                className={o.cls}
+                animate={o.anim}
+                transition={{ duration: o.dur, repeat: Infinity, ease: "easeInOut" }}
               />
             ))}
-            <span className="cta-pattern" />
           </div>
 
           <div className="cta-content">
@@ -43,6 +79,7 @@ export default function Cta() {
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
             >
+              <span className="cta-eyebrow-dot" aria-hidden="true" />
               Your Sacred Journey Awaits
             </motion.span>
 
@@ -53,7 +90,7 @@ export default function Cta() {
               viewport={{ once: true }}
               transition={{ delay: 0.18 }}
             >
-              Ready To Begin Your Spiritual Journey?
+              Ready To Begin Your <span className="cta-title-accent">Spiritual Journey</span>?
             </motion.h2>
 
             <motion.p
@@ -74,24 +111,55 @@ export default function Cta() {
               viewport={{ once: true }}
               transition={{ delay: 0.34 }}
             >
-              <motion.div whileHover={{ y: -3 }} whileTap={{ scale: 0.97 }}>
+              <motion.div
+                className="cta-btn-wrap"
+                whileHover={{ y: -3 }}
+                whileTap={{ scale: 0.97 }}
+              >
                 <Link to="/contact" className="cta-btn cta-btn-gold">
                   <SparkIcon className="cta-btn-ic" />
                   Get Free Quote
                 </Link>
               </motion.div>
 
-              <motion.a
-                href={whatsappLink || "#"}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="cta-btn cta-btn-glass"
+              <motion.div
+                className="cta-btn-wrap"
                 whileHover={{ y: -3 }}
                 whileTap={{ scale: 0.97 }}
               >
-                <WhatsAppIcon className="cta-btn-ic" />
-                WhatsApp Us
-              </motion.a>
+                <a
+                  href={whatsappLink || "#"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="cta-btn cta-btn-glass"
+                >
+                  <WhatsAppIcon className="cta-btn-ic" />
+                  WhatsApp Us
+                </a>
+              </motion.div>
+            </motion.div>
+
+            <motion.div
+              className="cta-trust"
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.42 }}
+            >
+              <span className="cta-trust-item">
+                <CheckIcon />
+                <span>UK-based team</span>
+              </span>
+              <span className="cta-trust-divider" aria-hidden="true" />
+              <span className="cta-trust-item">
+                <CheckIcon />
+                <span>1-hour reply</span>
+              </span>
+              <span className="cta-trust-divider" aria-hidden="true" />
+              <span className="cta-trust-item">
+                <CheckIcon />
+                <span>Fully protected</span>
+              </span>
             </motion.div>
           </div>
         </motion.div>

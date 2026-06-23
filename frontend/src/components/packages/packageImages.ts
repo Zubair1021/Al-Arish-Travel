@@ -1,7 +1,7 @@
-import img4Star from "../../assets/images/pkg-4star.png";
-import img5Star from "../../assets/images/pkg-5star.png";
-import imgRamadan from "../../assets/images/pkg-ramadan.png";
-import imgFamily from "../../assets/images/pkg-family.png";
+import img4Star from "../../assets/images/pkg-4star.jpg";
+import img5Star from "../../assets/images/pkg-5star.jpg";
+import imgRamadan from "../../assets/images/pkg-ramadan.jpg";
+import imgFamily from "../../assets/images/pkg-family.jpg";
 
 export const PACKAGE_IMAGE_PRESETS = {
   "pkg-4star": img4Star,

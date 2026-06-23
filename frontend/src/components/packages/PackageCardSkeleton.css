@@ -1,0 +1,93 @@
+.pkg-skel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #fff;
+  border-radius: 22px;
+  border: 1px solid rgba(13, 51, 38, 0.07);
+  overflow: hidden;
+  box-shadow: 0 12px 30px -22px rgba(13, 51, 38, 0.25);
+}
+.pkg-skel.is-featured {
+  border-color: rgba(200, 162, 74, 0.28);
+}
+
+.pkg-skel-media {
+  aspect-ratio: 4 / 3;
+  background: linear-gradient(
+    110deg,
+    #eef3ee 0%,
+    #f7f3ea 40%,
+    #eef3ee 80%
+  );
+  background-size: 200% 100%;
+  animation: pkg-skel-shimmer 1.4s ease-in-out infinite;
+}
+
+.pkg-skel-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 1.15rem 1.2rem 1.25rem;
+  flex: 1;
+}
+
+.pkg-skel-line {
+  display: block;
+  height: 12px;
+  border-radius: 999px;
+  background: linear-gradient(
+    110deg,
+    rgba(13, 51, 38, 0.06) 0%,
+    rgba(200, 162, 74, 0.14) 50%,
+    rgba(13, 51, 38, 0.06) 100%
+  );
+  background-size: 200% 100%;
+  animation: pkg-skel-shimmer 1.4s ease-in-out infinite;
+}
+.pkg-skel-title { width: 72%; height: 16px; }
+.pkg-skel-meta { width: 45%; height: 10px; animation-delay: 0.1s; }
+.pkg-skel-desc { width: 100%; animation-delay: 0.15s; }
+.pkg-skel-desc.short { width: 80%; animation-delay: 0.2s; }
+
+.pkg-skel-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: auto;
+  padding-top: 0.85rem;
+}
+.pkg-skel-price {
+  width: 38%;
+  height: 18px;
+  animation-delay: 0.25s;
+}
+.pkg-skel-btn {
+  width: 110px;
+  height: 38px;
+  border-radius: 999px;
+  background: linear-gradient(
+    110deg,
+    rgba(200, 162, 74, 0.12) 0%,
+    rgba(24, 73, 58, 0.1) 50%,
+    rgba(200, 162, 74, 0.12) 100%
+  );
+  background-size: 200% 100%;
+  animation: pkg-skel-shimmer 1.4s ease-in-out infinite;
+  animation-delay: 0.3s;
+}
+
+@keyframes pkg-skel-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pkg-skel-media,
+  .pkg-skel-line,
+  .pkg-skel-btn {
+    animation: none;
+    background: #eef3ee;
+  }
+}

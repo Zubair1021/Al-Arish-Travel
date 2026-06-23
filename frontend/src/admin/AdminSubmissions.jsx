@@ -20,6 +20,7 @@ import Pagination from './components/Pagination'
 import Modal from './components/Modal'
 import SubmissionKanban from './components/SubmissionKanban'
 import SubmissionDetail from './components/SubmissionDetail'
+import SubmissionListCards from './components/SubmissionListCards'
 import Select from '../components/ui/Select'
 
 const PAGE_SIZE = 15
@@ -284,41 +285,51 @@ export default function AdminSubmissions() {
             <div className="adm-empty"><p>No submissions match these filters.</p></div>
           ) : (
             <>
-              <table className="adm-table adm-table-clickable">
-                <thead>
-                  <tr>
-                    <th>Type</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Package</th>
-                    <th>Status</th>
-                    <th>When</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {paged.map((s) => (
-                    <tr key={s._id} className={s.read ? '' : 'is-unread'} onClick={() => openDetail(s)}>
-                      <td><span className="adm-chip">{TYPE_LABELS[s.type] || s.type}</span></td>
-                      <td>
-                        {!s.read && <span className="adm-dot" aria-label="Unread" />}
-                        {s.name}
-                      </td>
-                      <td className="adm-muted">{s.email}</td>
-                      <td className="adm-muted">{s.phone || '—'}</td>
-                      <td className="adm-muted">{s.packageName || '—'}</td>
-                      <td>
-                        <span className={`adm-chip adm-chip-${STATUS_TONES[s.status] || 'gray'}`}>
-                          {STATUS_LABELS[s.status] || s.status}
-                        </span>
-                      </td>
-                      <td className="adm-muted">{new Date(s.createdAt).toLocaleString()}</td>
+              <div className="adm-sub-table-wrap">
+                <table className="adm-table adm-table-clickable adm-table-submissions">
+                  <thead>
+                    <tr>
+                      <th>Type</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Phone</th>
+                      <th>Package</th>
+                      <th>Status</th>
+                      <th>When</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {paged.map((s) => (
+                      <tr
+                        key={s._id}
+                        className={s.read ? '' : 'is-unread'}
+                        onClick={() => openDetail(s)}
+                      >
+                        <td><span className="adm-chip">{TYPE_LABELS[s.type] || s.type}</span></td>
+                        <td>
+                          {!s.read && <span className="adm-dot" aria-label="Unread" />}
+                          {s.name}
+                        </td>
+                        <td className="adm-muted">{s.email}</td>
+                        <td className="adm-muted">{s.phone || '—'}</td>
+                        <td className="adm-muted">{s.packageName || '—'}</td>
+                        <td>
+                          <span className={`adm-chip adm-chip-${STATUS_TONES[s.status] || 'gray'}`}>
+                            {STATUS_LABELS[s.status] || s.status}
+                          </span>
+                        </td>
+                        <td className="adm-muted adm-cell-when">
+                          {new Date(s.createdAt).toLocaleString()}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
 
-              <div style={{ padding: '0 0.85rem' }}>
+              <SubmissionListCards submissions={paged} onOpen={openDetail} />
+
+              <div className="adm-sub-pagination">
                 <Pagination
                   page={page}
                   totalPages={totalPages}

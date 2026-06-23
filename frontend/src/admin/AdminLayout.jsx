@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useAdminAuth } from './AdminAuthContext'
+import Loader from './components/Loader'
 import { useToast } from './ToastContext'
 import { fetchRecentSubmissions, fetchSubmissionsSummary } from '../api/submissions'
 import logoWhite from '../assets/images/logo-white.jpg'
@@ -139,7 +140,7 @@ export default function AdminLayout() {
   if (!ready) {
     return (
       <div className="adm-shell adm-shell-loading">
-        <div className="adm-loading">Loading admin…</div>
+        <Loader label="Loading admin…" />
       </div>
     )
   }

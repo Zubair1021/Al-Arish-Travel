@@ -10,6 +10,7 @@ import { useSettings } from '../context/SettingsContext'
 import { useToast } from '../context/ToastContext'
 import { submitQuote } from '../api/submissions'
 import Select from '../components/ui/Select'
+import { ENQUIRY_FIELD_ORDER, hasFormErrors, validateEnquiryForm } from '../utils/validateEnquiryForm'
 import './ContactPage.css'
 
 const emptyForm = {
@@ -52,6 +53,7 @@ export default function ContactPage() {
       : { ...emptyForm, package: packages[0]?.name || 'Custom enquiry' },
   )
   const [status, setStatus] = useState('idle') // idle | submitting | success | error
+  const [errors, setErrors] = useState({})
 
   useEffect(() => {
     if (selectedPackage) {
@@ -61,7 +63,13 @@ export default function ContactPage() {
     setForm({ ...emptyForm, package: packages[0]?.name || 'Custom enquiry' })
   }, [selectedPackage, packages])
 
-  const update = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }))
+  const update = (key) => (e) => {
+    const value = e.target.value
+    setForm((f) => ({ ...f, [key]: value }))
+    if (errors[key]) {
+      setErrors((current) => ({ ...current, [key]: '' }))
+    }
+  }
 
   const channels = useMemo(
     () => [
@@ -90,6 +98,24 @@ export default function ContactPage() {
   const submit = async (e) => {
     e.preventDefault()
     if (status === 'submitting') return
+
+    const fieldErrors = validateEnquiryForm(form)
+    if (hasFormErrors(fieldErrors)) {
+      setErrors(fieldErrors)
+      pushToast({
+        title: 'Please complete required fields',
+        body: 'Name, email and phone are required to submit your quote.',
+        tone: 'error',
+        duration: 6000,
+      })
+      const first = ENQUIRY_FIELD_ORDER.find((key) => fieldErrors[key])
+      if (first) {
+        document.getElementById(`contact-${first}`)?.focus()
+      }
+      return
+    }
+
+    setErrors({})
     setStatus('submitting')
     try {
       await submitQuote({
@@ -147,6 +173,7 @@ export default function ContactPage() {
             <motion.form
               className="contact-form"
               onSubmit={submit}
+              noValidate
               initial={{ opacity: 0, y: 26 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -194,20 +221,67 @@ export default function ContactPage() {
               </p>
 
               <div className="contact-row">
-                <label className="contact-field">
-                  <span>Full name</span>
-                  <input value={form.name} onChange={update('name')} required placeholder="Your full name" />
+                <label className="contact-field" htmlFor="contact-name">
+                  <span>Full name <span className="field-required" aria-hidden="true">*</span></span>
+                  <input
+                    id="contact-name"
+                    name="name"
+                    value={form.name}
+                    onChange={update('name')}
+                    placeholder="Your full name"
+                    autoComplete="name"
+                    className={errors.name ? 'has-error' : ''}
+                    aria-invalid={errors.name ? 'true' : undefined}
+                    aria-describedby={errors.name ? 'contact-name-error' : undefined}
+                  />
+                  {errors.name && (
+                    <p id="contact-name-error" className="field-error" role="alert">
+                      {errors.name}
+                    </p>
+                  )}
                 </label>
-                <label className="contact-field">
-                  <span>Email</span>
-                  <input type="email" value={form.email} onChange={update('email')} required placeholder="you@example.com" />
+                <label className="contact-field" htmlFor="contact-email">
+                  <span>Email <span className="field-required" aria-hidden="true">*</span></span>
+                  <input
+                    id="contact-email"
+                    name="email"
+                    type="email"
+                    value={form.email}
+                    onChange={update('email')}
+                    placeholder="you@example.com"
+                    autoComplete="email"
+                    className={errors.email ? 'has-error' : ''}
+                    aria-invalid={errors.email ? 'true' : undefined}
+                    aria-describedby={errors.email ? 'contact-email-error' : undefined}
+                  />
+                  {errors.email && (
+                    <p id="contact-email-error" className="field-error" role="alert">
+                      {errors.email}
+                    </p>
+                  )}
                 </label>
               </div>
 
               <div className="contact-row">
-                <label className="contact-field">
-                  <span>Phone</span>
-                  <input type="tel" value={form.phone} onChange={update('phone')} placeholder="+44 ..." />
+                <label className="contact-field" htmlFor="contact-phone">
+                  <span>Phone <span className="field-required" aria-hidden="true">*</span></span>
+                  <input
+                    id="contact-phone"
+                    name="phone"
+                    type="tel"
+                    value={form.phone}
+                    onChange={update('phone')}
+                    placeholder="+44 ..."
+                    autoComplete="tel"
+                    className={errors.phone ? 'has-error' : ''}
+                    aria-invalid={errors.phone ? 'true' : undefined}
+                    aria-describedby={errors.phone ? 'contact-phone-error' : undefined}
+                  />
+                  {errors.phone && (
+                    <p id="contact-phone-error" className="field-error" role="alert">
+                      {errors.phone}
+                    </p>
+                  )}
                 </label>
                 {selectedPackage ? (
                   <label className="contact-field">

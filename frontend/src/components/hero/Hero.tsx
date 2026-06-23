@@ -8,7 +8,7 @@ import {
   ArrowRightIcon,
   StarIcon,
 } from "./heroIcons";
-import meccaImg from "../../assets/images/mecca-hero.png";
+import meccaImg from "../../assets/images/mecca-hero.jpg";
 import "./Hero.css";
 
 const container = {
@@ -120,7 +120,7 @@ export default function Hero() {
                 </Link>
               </motion.div>
             </motion.div>
-
+{/* 
             <motion.ul className="hero-trust" variants={fadeUp}>
               {trustBadges.map(({ icon: Icon, label }) => (
                 <li key={label} className="hero-trust-item">
@@ -130,7 +130,7 @@ export default function Hero() {
                   {label}
                 </li>
               ))}
-            </motion.ul>
+            </motion.ul> */}
           </motion.div>
 
           <motion.div

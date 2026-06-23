@@ -2,6 +2,8 @@ import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import PackageCard from "./PackageCard";
+import PackageCardSkeleton from "./PackageCardSkeleton";
+import Loader from "../ui/Loader";
 import { usePackages } from "../../context/PackagesContext";
 import type { Package, PackageCategory } from "./packageData";
 import "./Packages.css";
@@ -58,6 +60,8 @@ export default function Packages({
     navigate(`/contact?package=${encodeURIComponent(id)}`);
   };
 
+  const skeletonCount = featuredOnly ? 4 : 6;
+
   return (
     <section id="packages" className="pkgs">
       <div className="pkgs-bg" aria-hidden="true">
@@ -77,7 +81,7 @@ export default function Packages({
           <p className="pkgs-sub">{subtitle}</p>
         </motion.header>
 
-        {showFilters && (
+        {showFilters && !loading && (
           <div className="pkgs-filters" role="tablist" aria-label="Filter packages by category">
             {categories.map((cat) => (
               <button
@@ -99,19 +103,30 @@ export default function Packages({
           </div>
         )}
 
-        <motion.div
-          className="pkgs-grid"
-          variants={gridVariants}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-60px" }}
-        >
-          <AnimatePresence mode="popLayout">
-            {filteredPackages.map((pkg) => (
-              <PackageCard key={pkg.id} pkg={pkg} onViewDetails={handleViewDetails} />
-            ))}
-          </AnimatePresence>
-        </motion.div>
+        {loading ? (
+          <div className="pkgs-loading" aria-busy="true" aria-label="Loading packages">
+            <Loader label="Loading packages…" />
+            <div className="pkgs-grid pkgs-grid-skeleton">
+              {Array.from({ length: skeletonCount }, (_, i) => (
+                <PackageCardSkeleton key={i} featured={featuredOnly && i === 0} />
+              ))}
+            </div>
+          </div>
+        ) : (
+          <motion.div
+            className="pkgs-grid"
+            variants={gridVariants}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-60px" }}
+          >
+            <AnimatePresence mode="popLayout">
+              {filteredPackages.map((pkg) => (
+                <PackageCard key={pkg.id} pkg={pkg} onViewDetails={handleViewDetails} />
+              ))}
+            </AnimatePresence>
+          </motion.div>
+        )}
 
         {!loading && filteredPackages.length === 0 && (
           <p className="pkgs-empty">
@@ -121,7 +136,7 @@ export default function Packages({
           </p>
         )}
 
-        {showViewAll && (
+        {showViewAll && !loading && (
           <div className="pkgs-viewall">
             <Link to="/packages" className="pkgs-viewall-btn">
               View all packages

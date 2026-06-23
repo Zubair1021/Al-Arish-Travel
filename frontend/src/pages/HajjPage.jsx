@@ -7,6 +7,7 @@ import { useSettings } from '../context/SettingsContext'
 import { useToast } from '../context/ToastContext'
 import { submitHajj } from '../api/submissions'
 import Select from '../components/ui/Select'
+import { ENQUIRY_FIELD_ORDER, hasFormErrors, validateEnquiryForm } from '../utils/validateEnquiryForm'
 import './HajjPage.css'
 
 const highlights = [
@@ -36,14 +37,37 @@ export default function HajjPage() {
     message: '',
   })
   const [status, setStatus] = useState('idle')
+  const [errors, setErrors] = useState({})
 
   const update = (key) => (event) => {
-    setForm((current) => ({ ...current, [key]: event.target.value }))
+    const value = event.target.value
+    setForm((current) => ({ ...current, [key]: value }))
+    if (errors[key]) {
+      setErrors((current) => ({ ...current, [key]: '' }))
+    }
   }
 
   const submit = async (event) => {
     event.preventDefault()
     if (status === 'submitting') return
+
+    const fieldErrors = validateEnquiryForm(form)
+    if (hasFormErrors(fieldErrors)) {
+      setErrors(fieldErrors)
+      pushToast({
+        title: 'Please complete required fields',
+        body: 'Name, email and phone are required to register your interest.',
+        tone: 'error',
+        duration: 6000,
+      })
+      const first = ENQUIRY_FIELD_ORDER.find((key) => fieldErrors[key])
+      if (first) {
+        document.getElementById(`hajj-${first}`)?.focus()
+      }
+      return
+    }
+
+    setErrors({})
     setStatus('submitting')
     try {
       await submitHajj({
@@ -95,6 +119,7 @@ export default function HajjPage() {
             <motion.form
               className="hajj-form"
               onSubmit={submit}
+              noValidate
               initial={{ opacity: 0, y: 26 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -114,37 +139,67 @@ export default function HajjPage() {
               </label>
 
               <div className="hajj-row">
-                <label className="hajj-field">
-                  <span>Full name</span>
+                <label className="hajj-field" htmlFor="hajj-name">
+                  <span>Full name <span className="field-required" aria-hidden="true">*</span></span>
                   <input
+                    id="hajj-name"
+                    name="name"
                     value={form.name}
                     onChange={update('name')}
-                    required
                     placeholder="Your full name"
+                    autoComplete="name"
+                    className={errors.name ? 'has-error' : ''}
+                    aria-invalid={errors.name ? 'true' : undefined}
+                    aria-describedby={errors.name ? 'hajj-name-error' : undefined}
                   />
+                  {errors.name && (
+                    <p id="hajj-name-error" className="field-error" role="alert">
+                      {errors.name}
+                    </p>
+                  )}
                 </label>
-                <label className="hajj-field">
-                  <span>Email</span>
+                <label className="hajj-field" htmlFor="hajj-email">
+                  <span>Email <span className="field-required" aria-hidden="true">*</span></span>
                   <input
+                    id="hajj-email"
+                    name="email"
                     type="email"
                     value={form.email}
                     onChange={update('email')}
-                    required
                     placeholder="you@example.com"
+                    autoComplete="email"
+                    className={errors.email ? 'has-error' : ''}
+                    aria-invalid={errors.email ? 'true' : undefined}
+                    aria-describedby={errors.email ? 'hajj-email-error' : undefined}
                   />
+                  {errors.email && (
+                    <p id="hajj-email-error" className="field-error" role="alert">
+                      {errors.email}
+                    </p>
+                  )}
                 </label>
               </div>
 
               <div className="hajj-row">
-                <label className="hajj-field">
-                  <span>Phone</span>
+                <label className="hajj-field" htmlFor="hajj-phone">
+                  <span>Phone <span className="field-required" aria-hidden="true">*</span></span>
                   <input
+                    id="hajj-phone"
+                    name="phone"
                     type="tel"
                     value={form.phone}
                     onChange={update('phone')}
-                    required
                     placeholder="+44 ..."
+                    autoComplete="tel"
+                    className={errors.phone ? 'has-error' : ''}
+                    aria-invalid={errors.phone ? 'true' : undefined}
+                    aria-describedby={errors.phone ? 'hajj-phone-error' : undefined}
                   />
+                  {errors.phone && (
+                    <p id="hajj-phone-error" className="field-error" role="alert">
+                      {errors.phone}
+                    </p>
+                  )}
                 </label>
                 <div className="hajj-field">
                   <span>Number of pilgrims</span>

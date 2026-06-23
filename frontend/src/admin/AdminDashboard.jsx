@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react'
-import { Link, useOutletContext } from 'react-router-dom'
+import { Link, useNavigate, useOutletContext } from 'react-router-dom'
 import { fetchSubmissions } from '../api/submissions'
 import { STATUS_LABELS, STATUS_TONES, TYPE_LABELS } from './adminConstants'
+import Loader from './components/Loader'
+import SubmissionListCards from './components/SubmissionListCards'
 
 export default function AdminDashboard() {
   const { summary } = useOutletContext()
+  const navigate = useNavigate()
   const [recent, setRecent] = useState([])
   const [loading, setLoading] = useState(true)
 
@@ -59,36 +62,44 @@ export default function AdminDashboard() {
         </div>
 
         {loading ? (
-          <p className="adm-muted">Loading…</p>
+          <Loader label="Loading recent submissions…" />
         ) : recent.length === 0 ? (
           <p className="adm-muted">No submissions yet.</p>
         ) : (
-          <table className="adm-table">
-            <thead>
-              <tr>
-                <th>Type</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Status</th>
-                <th>When</th>
-              </tr>
-            </thead>
-            <tbody>
-              {recent.map((s) => (
-                <tr key={s._id}>
-                  <td><span className="adm-chip">{TYPE_LABELS[s.type] || s.type}</span></td>
-                  <td>{s.name}</td>
-                  <td className="adm-muted">{s.email}</td>
-                  <td>
-                    <span className={`adm-chip adm-chip-${STATUS_TONES[s.status] || 'gray'}`}>
-                      {STATUS_LABELS[s.status] || s.status}
-                    </span>
-                  </td>
-                  <td className="adm-muted">{formatWhen(s.createdAt)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <div className="adm-dash-recent">
+            <div className="adm-sub-table-wrap">
+              <table className="adm-table adm-table-submissions adm-table-dash">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>When</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {recent.map((s) => (
+                    <tr key={s._id} className={s.read ? '' : 'is-unread'}>
+                      <td><span className="adm-chip">{TYPE_LABELS[s.type] || s.type}</span></td>
+                      <td>{s.name}</td>
+                      <td className="adm-muted">{s.email}</td>
+                      <td>
+                        <span className={`adm-chip adm-chip-${STATUS_TONES[s.status] || 'gray'}`}>
+                          {STATUS_LABELS[s.status] || s.status}
+                        </span>
+                      </td>
+                      <td className="adm-muted adm-cell-when">{formatWhen(s.createdAt)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <SubmissionListCards
+              submissions={recent}
+              onOpen={() => navigate('/admin/submissions')}
+            />
+          </div>
         )}
       </section>
 

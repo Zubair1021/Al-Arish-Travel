@@ -3,6 +3,7 @@ import { fetchAdminSettings, updateSettings } from '../api/settings'
 import { changeAdminPassword } from '../api/auth'
 import { useSettings } from '../context/SettingsContext'
 import { useToast } from './ToastContext'
+import Loader from './components/Loader'
 
 const EMPTY = {
   siteName: '',
@@ -102,7 +103,19 @@ export default function AdminSettings() {
     }
   }
 
-  if (loading) return <p className="adm-muted">Loading settings…</p>
+  if (loading) {
+    return (
+      <div className="adm-page">
+        <header className="adm-page-head">
+          <div>
+            <h1>Site Settings</h1>
+            <p>These values appear on the live website (footer, contact page, navbar WhatsApp button).</p>
+          </div>
+        </header>
+        <Loader label="Loading settings…" />
+      </div>
+    )
+  }
 
   return (
     <div className="adm-page">

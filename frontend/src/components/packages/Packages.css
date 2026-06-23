@@ -134,6 +134,16 @@
   align-items: stretch;
 }
 
+.pkgs-loading {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.pkgs-grid-skeleton {
+  margin-top: 0.25rem;
+  opacity: 0.92;
+}
+
 /* ---------- Card — clean & professional ---------- */
 .pkg-card {
   display: flex;

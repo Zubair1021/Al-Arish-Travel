@@ -1,0 +1,30 @@
+/* Shared required-field validation styles (contact + hajj forms) */
+.field-required {
+  color: #c44040;
+  font-weight: 700;
+  margin-left: 0.15rem;
+}
+
+.field-error {
+  margin: 0.35rem 0 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #a83232;
+  line-height: 1.4;
+}
+
+.contact-field input.has-error,
+.contact-field textarea.has-error,
+.hajj-field input.has-error,
+.hajj-field textarea.has-error {
+  border-color: #d94d4d;
+  background: #fff8f8;
+}
+
+.contact-field input.has-error:focus,
+.contact-field textarea.has-error:focus,
+.hajj-field input.has-error:focus,
+.hajj-field textarea.has-error:focus {
+  border-color: #c44040;
+  box-shadow: 0 0 0 3px rgba(196, 64, 64, 0.15);
+}

@@ -1,0 +1,34 @@
+/* Public site loader — green + gold brand */
+.site-loader {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--sans, system-ui, "Segoe UI", Roboto, sans-serif);
+}
+.site-loader-spinner {
+  display: inline-block;
+  animation: site-loader-spin 0.95s linear infinite;
+}
+.site-loader-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #6b7670;
+  letter-spacing: 0.2px;
+}
+.site-loader-block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2.5rem 1rem;
+  width: 100%;
+}
+
+@keyframes site-loader-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-loader-spinner {
+    animation: none;
+  }
+}
