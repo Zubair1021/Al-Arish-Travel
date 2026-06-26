@@ -10,6 +10,7 @@ import {
 import { resolvePackageImage } from '../components/packages/packageImages'
 import { CATEGORY_LABELS, PRESET_OPTIONS } from './adminConstants'
 import { useToast } from './ToastContext'
+import { useConfirm } from '../context/ConfirmContext'
 import Loader from './components/Loader'
 import Pagination from './components/Pagination'
 import Select from '../components/ui/Select'
@@ -41,6 +42,7 @@ const PAGE_SIZE = 9
 
 export default function AdminPackages() {
   const { push } = useToast()
+  const confirm = useConfirm()
   const [packages, setPackages] = useState([])
   const [loading, setLoading] = useState(true)
   const [editing, setEditing] = useState(null)
@@ -179,7 +181,14 @@ export default function AdminPackages() {
   }
 
   const remove = async (pkg) => {
-    if (!window.confirm(`Delete "${pkg.name}"? This cannot be undone.`)) return
+    const ok = await confirm({
+      title: `Delete "${pkg.name}"?`,
+      message: 'This cannot be undone.',
+      confirmLabel: 'Delete',
+      cancelLabel: 'Cancel',
+      tone: 'danger',
+    })
+    if (!ok) return
     try {
       await deletePackage(pkg._id)
       push({ title: 'Package deleted', tone: 'success' })

@@ -1,0 +1,138 @@
+/* Public site confirm dialog */
+.confirm-root {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.confirm-backdrop {
+  position: absolute;
+  inset: 0;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background: rgba(13, 51, 38, 0.45);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  animation: confirm-fade 0.18s ease;
+}
+
+.confirm-dialog {
+  position: relative;
+  width: min(420px, 100%);
+  background: #fff;
+  border-radius: 18px;
+  padding: 1.35rem 1.35rem 1.15rem;
+  box-shadow: 0 32px 80px -32px rgba(13, 51, 38, 0.45);
+  text-align: center;
+  animation: confirm-in 0.22s ease;
+}
+
+.confirm-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  margin: 0 auto 0.85rem;
+  border-radius: 50%;
+  background: rgba(200, 162, 74, 0.14);
+  color: #8a6a1a;
+}
+
+.confirm-icon.is-danger {
+  background: rgba(220, 53, 69, 0.1);
+  color: #b42318;
+}
+
+.confirm-title {
+  margin: 0 0 0.45rem;
+  font-size: 1.15rem;
+  color: #0d3326;
+}
+
+.confirm-message {
+  margin: 0 0 1.15rem;
+  color: #5a6b64;
+  line-height: 1.55;
+  font-size: 0.94rem;
+}
+
+.confirm-actions {
+  display: flex;
+  gap: 0.65rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.confirm-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 108px;
+  padding: 0.62rem 1.1rem;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+}
+
+.confirm-btn-ghost {
+  background: #fff;
+  border-color: rgba(13, 51, 38, 0.16);
+  color: #0d3326;
+}
+
+.confirm-btn-ghost:hover {
+  background: #f7faf8;
+}
+
+.confirm-btn-primary {
+  background: #0d3326;
+  color: #fff;
+}
+
+.confirm-btn-primary:hover {
+  background: #18493a;
+}
+
+.confirm-btn-danger {
+  background: #dc3545;
+  color: #fff;
+}
+
+.confirm-btn-danger:hover {
+  background: #c82333;
+}
+
+@keyframes confirm-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes confirm-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 480px) {
+  .confirm-actions {
+    flex-direction: column-reverse;
+  }
+  .confirm-btn {
+    width: 100%;
+  }
+}

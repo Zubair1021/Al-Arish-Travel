@@ -1331,6 +1331,79 @@
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
+/* ---------- Confirm dialog (above modals) ---------- */
+.adm-confirm-root {
+  position: fixed;
+  inset: 0;
+  z-index: 350;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+.adm-confirm-backdrop {
+  position: absolute;
+  inset: 0;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background: rgba(13, 51, 38, 0.55);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  animation: adm-fade 0.18s ease;
+}
+.adm-confirm {
+  position: relative;
+  width: min(420px, 100%);
+  background: #fff;
+  border-radius: 18px;
+  padding: 1.35rem 1.35rem 1.15rem;
+  box-shadow: 0 40px 100px -40px rgba(0, 0, 0, 0.7);
+  text-align: center;
+  animation: adm-modal-in 0.22s ease;
+}
+.adm-confirm-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  margin: 0 auto 0.85rem;
+  border-radius: 50%;
+  background: rgba(200, 162, 74, 0.14);
+  color: #8a6a1a;
+}
+.adm-confirm-icon.is-danger {
+  background: rgba(220, 53, 69, 0.1);
+  color: #b42318;
+}
+.adm-confirm-title {
+  margin: 0 0 0.45rem;
+  font-size: 1.1rem;
+  color: var(--adm-green-deep);
+}
+.adm-confirm-message {
+  margin: 0 0 1.15rem;
+  color: var(--adm-muted);
+  line-height: 1.55;
+  font-size: 0.9rem;
+}
+.adm-confirm-actions {
+  display: flex;
+  gap: 0.65rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+@media (max-width: 480px) {
+  .adm-confirm-actions {
+    flex-direction: column-reverse;
+  }
+  .adm-confirm-actions .adm-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 /* ---------- Login ---------- */
 .adm-login {
   min-height: 100dvh;

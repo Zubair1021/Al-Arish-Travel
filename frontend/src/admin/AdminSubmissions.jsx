@@ -15,6 +15,7 @@ import {
   TYPE_OPTIONS,
 } from './adminConstants'
 import { useToast } from './ToastContext'
+import { useConfirm } from '../context/ConfirmContext'
 import Loader from './components/Loader'
 import Pagination from './components/Pagination'
 import Modal from './components/Modal'
@@ -58,6 +59,7 @@ function ViewIcon({ kind }) {
 
 export default function AdminSubmissions() {
   const { push } = useToast()
+  const confirm = useConfirm()
   const { refreshSummary } = useOutletContext()
   const [searchParams, setSearchParams] = useSearchParams()
 
@@ -164,7 +166,14 @@ export default function AdminSubmissions() {
   }
 
   const handleDelete = async (id) => {
-    if (!window.confirm('Delete this submission?')) return
+    const ok = await confirm({
+      title: 'Delete this submission?',
+      message: 'This enquiry will be permanently removed.',
+      confirmLabel: 'Delete',
+      cancelLabel: 'Cancel',
+      tone: 'danger',
+    })
+    if (!ok) return
     try {
       await deleteSubmission(id)
       setSubmissions((current) => current.filter((s) => s._id !== id))

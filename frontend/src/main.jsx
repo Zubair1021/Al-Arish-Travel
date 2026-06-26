@@ -5,6 +5,7 @@ import App from './App.jsx'
 import { SettingsProvider } from './context/SettingsContext.jsx'
 import { PackagesProvider } from './context/PackagesContext.jsx'
 import { ToastProvider } from './context/ToastContext.jsx'
+import { ConfirmProvider } from './context/ConfirmContext.jsx'
 import './index.css'
 
 const HomePage = lazy(() => import('./pages/HomePage.jsx'))
@@ -45,13 +46,15 @@ createRoot(document.getElementById('root')).render(
           {/* Public website */}
           <Route
             element={
-              <SettingsProvider>
-                <PackagesProvider>
-                  <ToastProvider>
+            <SettingsProvider>
+              <PackagesProvider>
+                <ToastProvider>
+                  <ConfirmProvider theme="public">
                     <App />
-                  </ToastProvider>
-                </PackagesProvider>
-              </SettingsProvider>
+                  </ConfirmProvider>
+                </ToastProvider>
+              </PackagesProvider>
+            </SettingsProvider>
             }
           >
             <Route path="/" element={<HomePage />} />
