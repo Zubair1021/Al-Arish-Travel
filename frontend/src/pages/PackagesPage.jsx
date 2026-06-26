@@ -3,10 +3,33 @@ import Packages from '../components/packages/Packages'
 import Features from '../components/features/Features'
 import Cta from '../components/cta/Cta'
 import PageHero from '../components/pageHero/PageHero'
+import Seo from '../seo/Seo'
+import { PAGE_META } from '../seo/pageMeta'
+import { buildBreadcrumbSchema, buildOrganizationSchema, buildPackagesItemListSchema } from '../seo/schema'
+import { usePackages } from '../context/PackagesContext'
+import { useSettings } from '../context/SettingsContext'
 
 export default function PackagesPage() {
+  const { packages } = usePackages()
+  const { settings } = useSettings()
+  const meta = PAGE_META.packages
+
   return (
     <>
+      <Seo
+        title={meta.title}
+        description={meta.description}
+        keywords={meta.keywords}
+        path="/packages"
+        jsonLd={[
+          buildOrganizationSchema(settings),
+          buildBreadcrumbSchema([
+            { name: 'Home', url: '/' },
+            { name: 'Umrah Packages', url: '/packages' },
+          ]),
+          buildPackagesItemListSchema(packages),
+        ].filter(Boolean)}
+      />
       <PageHero
         eyebrow="All Inclusive Pilgrimage"
         title="Umrah Packages"

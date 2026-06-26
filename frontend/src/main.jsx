@@ -7,6 +7,8 @@ import PackagesPage from './pages/PackagesPage.jsx'
 import AboutPage from './pages/AboutPage.jsx'
 import ContactPage from './pages/ContactPage.jsx'
 import HajjPage from './pages/HajjPage.jsx'
+import LegalPage from './pages/LegalPage.jsx'
+import NotFoundPage from './pages/NotFoundPage.jsx'
 import AdminApp from './admin/AdminApp.jsx'
 import AdminLogin from './admin/AdminLogin.jsx'
 import AdminLayout from './admin/AdminLayout.jsx'
@@ -51,7 +53,10 @@ createRoot(document.getElementById('root')).render(
           <Route path="/about" element={<AboutPage />} />
           <Route path="/hajj" element={<HajjPage />} />
           <Route path="/contact" element={<ContactPage />} />
-          <Route path="*" element={<HomePage />} />
+          <Route path="/privacy" element={<LegalPage slug="privacy" />} />
+          <Route path="/terms" element={<LegalPage slug="terms" />} />
+          <Route path="/atol" element={<LegalPage slug="atol" />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

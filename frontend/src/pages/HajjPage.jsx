@@ -8,6 +8,9 @@ import { useToast } from '../context/ToastContext'
 import { submitHajj } from '../api/submissions'
 import Select from '../components/ui/Select'
 import { ENQUIRY_FIELD_ORDER, hasFormErrors, validateEnquiryForm } from '../utils/validateEnquiryForm'
+import Seo from '../seo/Seo'
+import { PAGE_META } from '../seo/pageMeta'
+import { buildBreadcrumbSchema, buildOrganizationSchema } from '../seo/schema'
 import './HajjPage.css'
 
 const highlights = [
@@ -27,7 +30,7 @@ const highlights = [
 
 export default function HajjPage() {
   const copy = useMemo(() => getHajjRegistrationCopy(), [])
-  const { whatsappLink } = useSettings()
+  const { whatsappLink, settings } = useSettings()
   const { push: pushToast } = useToast()
   const [form, setForm] = useState({
     name: '',
@@ -104,8 +107,23 @@ export default function HajjPage() {
       ? copy.successMessage
       : copy.submitLabel
 
+  const meta = PAGE_META.hajj
+
   return (
     <>
+      <Seo
+        title={meta.title}
+        description={meta.description}
+        keywords={meta.keywords}
+        path="/hajj"
+        jsonLd={[
+          buildOrganizationSchema(settings),
+          buildBreadcrumbSchema([
+            { name: 'Home', url: '/' },
+            { name: 'Hajj Registration', url: '/hajj' },
+          ]),
+        ]}
+      />
       <PageHero
         eyebrow={copy.heroEyebrow}
         title={copy.heroTitle}

@@ -11,6 +11,10 @@ import { useToast } from '../context/ToastContext'
 import { submitQuote } from '../api/submissions'
 import Select from '../components/ui/Select'
 import { ENQUIRY_FIELD_ORDER, hasFormErrors, validateEnquiryForm } from '../utils/validateEnquiryForm'
+import Seo from '../seo/Seo'
+import { PAGE_META } from '../seo/pageMeta'
+import { SITE_NAME } from '../seo/constants'
+import { buildBreadcrumbSchema, buildOrganizationSchema } from '../seo/schema'
 import './ContactPage.css'
 
 const emptyForm = {
@@ -154,8 +158,31 @@ export default function ContactPage() {
       ? 'Thank you! We will be in touch.'
       : 'Submit a Quote'
 
+  const meta = PAGE_META.contact
+  const seoTitle = selectedPackage
+    ? `${selectedPackage.name} Quote | ${SITE_NAME}`
+    : meta.title
+  const seoDescription = selectedPackage
+    ? `Request a free personalised quote for ${selectedPackage.name} — ${selectedPackage.duration}, from ${selectedPackage.currency}${Number(selectedPackage.price).toLocaleString()} per person. UK support, flights and hotels included.`
+    : meta.description
+  const seoPath = selectedPackage ? `/contact?package=${selectedPackage.id}` : '/contact'
+
   return (
     <>
+      <Seo
+        title={seoTitle}
+        description={seoDescription}
+        keywords={meta.keywords}
+        path={seoPath}
+        jsonLd={[
+          buildOrganizationSchema(settings),
+          buildBreadcrumbSchema([
+            { name: 'Home', url: '/' },
+            { name: 'Contact', url: '/contact' },
+            ...(selectedPackage ? [{ name: selectedPackage.name }] : []),
+          ]),
+        ]}
+      />
       <PageHero
         eyebrow={selectedPackage ? 'Package Enquiry' : "We're Here To Help"}
         title={selectedPackage ? selectedPackage.name : 'Get In Touch'}

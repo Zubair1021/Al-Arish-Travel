@@ -5,6 +5,10 @@ import Trust from '../components/trust/Trust'
 import Testimonials from '../components/testimonials/Testimonials'
 import Cta from '../components/cta/Cta'
 import PageHero from '../components/pageHero/PageHero'
+import Seo from '../seo/Seo'
+import { PAGE_META } from '../seo/pageMeta'
+import { buildBreadcrumbSchema, buildOrganizationSchema } from '../seo/schema'
+import { useSettings } from '../context/SettingsContext'
 import './AboutPage.css'
 
 const values = [
@@ -23,8 +27,24 @@ const values = [
 ]
 
 export default function AboutPage() {
+  const { settings } = useSettings()
+  const meta = PAGE_META.about
+
   return (
     <>
+      <Seo
+        title={meta.title}
+        description={meta.description}
+        keywords={meta.keywords}
+        path="/about"
+        jsonLd={[
+          buildOrganizationSchema(settings),
+          buildBreadcrumbSchema([
+            { name: 'Home', url: '/' },
+            { name: 'About', url: '/about' },
+          ]),
+        ]}
+      />
       <PageHero
         eyebrow="Our Story"
         title="About Al Arish Travel"
