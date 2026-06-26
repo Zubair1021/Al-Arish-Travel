@@ -1,7 +1,7 @@
 main {
   display: flex;
   flex-direction: column;
-  padding-top: var(--nav-offset);
+  padding-top: calc(var(--nav-offset) + var(--nav-gap, 0.75rem));
 }
 
 /* Home hero fills the viewport with navbar floating on top */

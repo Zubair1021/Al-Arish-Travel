@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import NavLinks from "./NavLinks";
 import { useSettings } from "../../context/SettingsContext";
 import { WhatsAppIcon, SparkIcon, MenuIcon, CloseIcon } from "./icons";
-import logo from "../../assets/images/logo.png";
+import logo from "../../assets/images/logo-nav.png";
 
 const drawer = {
   hidden: { x: "100%" },
@@ -72,7 +72,9 @@ export default function MobileNav() {
               aria-modal="true"
             >
               <div className="nav-drawer-head">
-                <img src={logo} alt="Al Arish Travel" className="nav-drawer-logo" />
+                <span className="nav-drawer-logo-mark">
+                  <img src={logo} alt="Al Arish Travel" className="nav-drawer-logo" width={197} height={283} />
+                </span>
                 <motion.button
                   type="button"
                   className="nav-close"

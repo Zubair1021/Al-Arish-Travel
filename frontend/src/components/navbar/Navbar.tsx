@@ -1,13 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import DesktopNav from "./DesktopNav";
 import MobileNav from "./MobileNav";
-import logo from "../../assets/images/logo.png";
+import logo from "../../assets/images/logo-nav.png";
 import "./Navbar.css";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -16,8 +17,32 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return undefined;
+
+    const syncNavOffset = () => {
+      const height = header.getBoundingClientRect().height;
+      document.documentElement.style.setProperty(
+        "--nav-offset",
+        `${Math.ceil(height)}px`,
+      );
+    };
+
+    syncNavOffset();
+
+    const observer = new ResizeObserver(syncNavOffset);
+    observer.observe(header);
+    window.addEventListener("resize", syncNavOffset);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", syncNavOffset);
+    };
+  }, [scrolled]);
+
   return (
-    <header className="nav-root">
+    <header className="nav-root" ref={headerRef}>
       <motion.nav
         className={`nav-pill${scrolled ? " is-scrolled" : ""}`}
         initial={{ y: -28, opacity: 0 }}
@@ -25,7 +50,9 @@ export default function Navbar() {
         transition={{ type: "spring", stiffness: 240, damping: 26, delay: 0.1 }}
       >
           <Link to="/" className="nav-logo" aria-label="Al Arish Travel home">
-          <img src={logo} alt="Al Arish Travel" width={160} height={48} decoding="async" />
+          <span className="nav-logo-mark">
+            <img src={logo} alt="Al Arish Travel" width={197} height={283} decoding="async" />
+          </span>
         </Link>
 
         <DesktopNav />
