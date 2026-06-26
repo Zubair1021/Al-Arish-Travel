@@ -24,8 +24,8 @@ export default function Navbar() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: "spring", stiffness: 240, damping: 26, delay: 0.1 }}
       >
-        <Link to="/" className="nav-logo" aria-label="Al Arish Travel home">
-          <img src={logo} alt="Al Arish Travel" />
+          <Link to="/" className="nav-logo" aria-label="Al Arish Travel home">
+          <img src={logo} alt="Al Arish Travel" width={160} height={48} decoding="async" />
         </Link>
 
         <DesktopNav />

@@ -48,6 +48,8 @@ export default function Cta() {
               src={ctaMakkah}
               alt=""
               className="cta-photo"
+              loading="lazy"
+              decoding="async"
               initial={{ scale: 1.08 }}
               whileInView={{ scale: 1.14 }}
               viewport={{ once: true, margin: "-80px" }}

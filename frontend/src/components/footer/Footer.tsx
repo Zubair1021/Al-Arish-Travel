@@ -24,7 +24,7 @@ export default function Footer() {
         >
           <Link to="/" className="ft-logo" aria-label={`${settings.siteName} home`}>
             <span className="ft-logo-panel">
-              <img src={logoWhite} alt={settings.siteName} />
+              <img src={logoWhite} alt={settings.siteName} width={180} height={60} loading="lazy" decoding="async" />
             </span>
           </Link>
 

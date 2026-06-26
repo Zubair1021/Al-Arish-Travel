@@ -140,7 +140,14 @@ export default function Hero() {
             transition={{ type: "spring", stiffness: 180, damping: 26, delay: 0.25 }}
           >
             <div className="hero-card">
-              <img src={meccaImg} alt="The Holy Kaaba in Masjid al-Haram, Mecca" />
+              <img
+                src={meccaImg}
+                alt="The Holy Kaaba in Masjid al-Haram, Mecca"
+                width={1200}
+                height={800}
+                decoding="async"
+                fetchPriority="high"
+              />
               <div className="hero-card-glow" aria-hidden="true" />
             </div>
 

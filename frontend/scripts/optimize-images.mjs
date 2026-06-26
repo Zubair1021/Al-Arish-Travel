@@ -78,6 +78,9 @@ async function processFile(fullPath, baseName) {
   const maxWidth = isLogo ? MAX_WIDTH_LOGO : MAX_WIDTH_DEFAULT;
 
   let pipeline = sharp(fullPath, { failOn: 'none' }).rotate();
+  if (isLogo) {
+    pipeline = pipeline.resize({ width: maxWidth, height: maxWidth, fit: 'inside', withoutEnlargement: true });
+  }
   const meta = await sharp(fullPath).metadata();
   if (meta.width && meta.width > maxWidth) {
     pipeline = pipeline.resize({ width: maxWidth, withoutEnlargement: true });

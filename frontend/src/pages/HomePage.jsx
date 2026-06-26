@@ -1,11 +1,10 @@
+import { lazy, Suspense } from 'react'
 import Hero from '../components/hero/Hero'
 import Packages from '../components/packages/Packages'
 import Features from '../components/features/Features'
 import Journey from '../components/journey/Journey'
-import Testimonials from '../components/testimonials/Testimonials'
 import Trust from '../components/trust/Trust'
 import Faq from '../components/faq/Faq'
-import Cta from '../components/cta/Cta'
 import Seo from '../seo/Seo'
 import { PAGE_META } from '../seo/pageMeta'
 import {
@@ -14,6 +13,9 @@ import {
   buildWebSiteSchema,
 } from '../seo/schema'
 import { useSettings } from '../context/SettingsContext'
+
+const Testimonials = lazy(() => import('../components/testimonials/Testimonials'))
+const Cta = lazy(() => import('../components/cta/Cta'))
 
 export default function HomePage() {
   const { settings } = useSettings()
@@ -41,10 +43,14 @@ export default function HomePage() {
       />
       <Features />
       <Journey />
-      <Testimonials />
+      <Suspense fallback={null}>
+        <Testimonials />
+      </Suspense>
       <Trust />
       <Faq />
-      <Cta />
+      <Suspense fallback={null}>
+        <Cta />
+      </Suspense>
     </>
   )
 }
