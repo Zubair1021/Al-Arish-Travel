@@ -43,7 +43,7 @@ const JPG_QUALITY = 82;
 const PNG_COLORS = 192; // palette colors for quantized PNGs
 
 // PNG files that MUST preserve transparency (logos, icons, etc.)
-const TRANSPARENT_FILES = new Set(['logo.png']);
+const TRANSPARENT_FILES = new Set(['logo.png', 'logo-nav.png', 'logo-footer.png']);
 
 // Files that should be downscaled more aggressively (logos)
 const LOGO_FILES = new Set(['logo.png', 'logo-white.jpg']);

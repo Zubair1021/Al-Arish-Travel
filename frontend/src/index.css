@@ -20,8 +20,8 @@
   color-scheme: light;
   color: var(--text);
   background: #fbfaf5;
-  --nav-offset: 8.5rem;
-  --nav-gap: 1.15rem;
+  --nav-offset: 5.5rem;
+  --nav-gap: 1rem;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -29,12 +29,12 @@
 
   @media (max-width: 1024px) {
     font-size: 16px;
-    --nav-offset: 8rem;
-    --nav-gap: 1rem;
+    --nav-offset: 5.25rem;
+    --nav-gap: 0.9rem;
   }
 
   @media (max-width: 480px) {
-    --nav-offset: 7.5rem;
+    --nav-offset: 5rem;
     --nav-gap: 0.85rem;
   }
 }

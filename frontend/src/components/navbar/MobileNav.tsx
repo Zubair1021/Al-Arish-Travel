@@ -73,7 +73,7 @@ export default function MobileNav() {
             >
               <div className="nav-drawer-head">
                 <span className="nav-drawer-logo-mark">
-                  <img src={logo} alt="Al Arish Travel" className="nav-drawer-logo" width={197} height={283} />
+                  <img src={logo} alt="Al Arish Travel" className="nav-drawer-logo" width={1280} height={614} />
                 </span>
                 <motion.button
                   type="button"

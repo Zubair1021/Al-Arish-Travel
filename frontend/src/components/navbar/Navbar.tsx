@@ -51,7 +51,7 @@ export default function Navbar() {
       >
           <Link to="/" className="nav-logo" aria-label="Al Arish Travel home">
           <span className="nav-logo-mark">
-            <img src={logo} alt="Al Arish Travel" width={197} height={283} decoding="async" />
+            <img src={logo} alt="Al Arish Travel" width={1280} height={614} decoding="async" />
           </span>
         </Link>
 

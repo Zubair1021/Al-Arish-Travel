@@ -58,36 +58,28 @@
   align-items: center;
   text-decoration: none;
   line-height: 0;
-}
-.ft-logo-panel {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  padding: 0.15rem 0.35rem;
+  background: #fff;
+  padding: 0.55rem 0.9rem;
   border-radius: 14px;
-  background: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.15);
   box-shadow:
-    0 14px 32px -14px rgba(0, 0, 0, 0.55),
-    0 0 0 1px rgba(200, 162, 74, 0.25);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+    0 4px 18px rgba(0, 0, 0, 0.18),
+    0 1px 0 rgba(255, 255, 255, 0.6) inset;
+  transition: opacity 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
-.ft-logo:hover .ft-logo-panel {
-  transform: translateY(-2px);
+.ft-logo:hover {
+  opacity: 1;
+  transform: translateY(-1px);
   box-shadow:
-    0 18px 38px -14px rgba(0, 0, 0, 0.6),
-    0 0 0 1px rgba(200, 162, 74, 0.45);
+    0 8px 24px rgba(0, 0, 0, 0.22),
+    0 1px 0 rgba(255, 255, 255, 0.6) inset;
 }
-.ft-logo-panel img {
-  height: clamp(72px, 8vw, 96px);
+.ft-logo img {
+  height: clamp(3.75rem, 6vw, 5.25rem);
   width: auto;
+  max-width: min(20rem, 42vw);
   display: block;
   object-fit: contain;
-  /* logo-white.jpg has extra white margin — zoom in so the mark fills the panel */
-  transform: scale(1.35);
-  transform-origin: center;
-  margin: -6px -10px;
+  object-position: left center;
 }
 
 .ft-tagline {
@@ -278,6 +270,10 @@
     grid-template-columns: 1fr;
     gap: 1.25rem;
     text-align: left;
+  }
+  .ft-logo img {
+    height: clamp(3.25rem, 11vw, 4.5rem);
+    max-width: min(18rem, 72vw);
   }
   .ft-cols {
     grid-template-columns: repeat(2, 1fr);

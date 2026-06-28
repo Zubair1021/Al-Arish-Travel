@@ -4,7 +4,7 @@ import FooterLinks from "./FooterLinks";
 import SocialIcons from "./SocialIcons";
 import { footerColumns } from "./footerData";
 import { useSettings } from "../../context/SettingsContext";
-import logoWhite from "../../assets/images/logo-white.jpg";
+import logo from "../../assets/images/logo-nav.png";
 import "./Footer.css";
 
 export default function Footer() {
@@ -23,9 +23,7 @@ export default function Footer() {
           transition={{ duration: 0.5 }}
         >
           <Link to="/" className="ft-logo" aria-label={`${settings.siteName} home`}>
-            <span className="ft-logo-panel">
-              <img src={logoWhite} alt={settings.siteName} width={180} height={60} loading="lazy" decoding="async" />
-            </span>
+            <img src={logo} alt={settings.siteName} width={1280} height={614} loading="lazy" decoding="async" />
           </Link>
 
           <p className="ft-tagline">{settings.tagline}</p>
