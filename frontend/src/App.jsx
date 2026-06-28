@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom'
 import Navbar from './components/navbar/Navbar'
 import Footer from './components/footer/Footer'
 import ScrollToTop from './components/layout/ScrollToTop'
+import TawkChat from './components/tawk/TawkChat'
 import './App.css'
 
 export default function App() {
@@ -13,6 +14,7 @@ export default function App() {
         <Outlet />
       </main>
       <Footer />
+      <TawkChat />
     </>
   )
 }
