@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import DesktopNav from "./DesktopNav";
 import MobileNav from "./MobileNav";
-import logo from "../../assets/images/logo-nav.png";
+import logoNav from "../../assets/images/logo-nav.png";
+import logoFooter from "../../assets/images/logo-footer.png";
 import "./Navbar.css";
 
 export default function Navbar() {
@@ -43,21 +43,26 @@ export default function Navbar() {
 
   return (
     <header className="nav-root" ref={headerRef}>
-      <motion.nav
-        className={`nav-pill${scrolled ? " is-scrolled" : ""}`}
-        initial={{ y: -28, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ type: "spring", stiffness: 240, damping: 26, delay: 0.1 }}
-      >
+      <nav className={`nav-pill${scrolled ? " is-scrolled" : ""}`}>
           <Link to="/" className="nav-logo" aria-label="Al Arish Travel home">
           <span className="nav-logo-mark">
-            <img src={logo} alt="Al Arish Travel" width={1280} height={614} decoding="async" />
+            <picture>
+              <source media="(max-width: 980px)" srcSet={logoNav} />
+              <img
+                src={logoFooter}
+                alt="Al Arish Travel"
+                width={1280}
+                height={614}
+                decoding="sync"
+                fetchPriority="high"
+              />
+            </picture>
           </span>
         </Link>
 
         <DesktopNav />
         <MobileNav />
-      </motion.nav>
+      </nav>
     </header>
   );
 }

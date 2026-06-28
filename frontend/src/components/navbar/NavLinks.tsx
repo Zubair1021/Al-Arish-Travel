@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import { navLinks } from "./navData";
 
@@ -6,11 +5,6 @@ interface NavLinksProps {
   variant?: "desktop" | "mobile";
   onNavigate?: () => void;
 }
-
-const mobileItem = {
-  hidden: { opacity: 0, x: 24 },
-  show: { opacity: 1, x: 0 },
-};
 
 export default function NavLinks({
   variant = "desktop",
@@ -26,7 +20,7 @@ export default function NavLinks({
         {navLinks.map((link) => {
           const active = isActive(link.to);
           return (
-            <motion.li key={link.to} variants={mobileItem}>
+            <li key={link.to}>
               <Link
                 to={link.to}
                 className={`nav-mlink${active ? " is-active" : ""}`}
@@ -35,7 +29,7 @@ export default function NavLinks({
                 <span className="nav-mlink-bar" aria-hidden="true" />
                 {link.label}
               </Link>
-            </motion.li>
+            </li>
           );
         })}
       </ul>
@@ -53,13 +47,7 @@ export default function NavLinks({
               className={`nav-link${active ? " is-active" : ""}`}
               onClick={onNavigate}
             >
-              {active && (
-                <motion.span
-                  layoutId="nav-active-pill"
-                  className="nav-link-pill"
-                  transition={{ type: "spring", stiffness: 480, damping: 38 }}
-                />
-              )}
+              {active && <span className="nav-link-pill" aria-hidden="true" />}
               <span className="nav-link-text">{link.label}</span>
             </Link>
           </li>

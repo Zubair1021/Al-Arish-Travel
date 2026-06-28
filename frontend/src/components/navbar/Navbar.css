@@ -53,19 +53,25 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 
-/* Desktop — green bar, white logo panel, light links */
+/* Desktop — full-width green bar, white logo panel */
 @media (min-width: 981px) {
   .nav-root {
     --nav-logo-w: clamp(13rem, 18vw, 16.5rem);
     --nav-logo-h: clamp(3.75rem, 5.5vw, 5rem);
+    justify-content: stretch;
+    padding: 0;
   }
 
   .nav-pill {
+    width: 100%;
+    max-width: none;
     gap: 0.85rem;
     min-height: calc(var(--nav-logo-h) + 1.55rem);
-    padding: 0.7rem 1.15rem 0.75rem 1.5rem;
+    padding: 0.7rem clamp(1.25rem, 3vw, 2.5rem);
+    border-radius: 0 0 1.25rem 1.25rem;
     background: linear-gradient(135deg, var(--nav-green) 0%, var(--nav-green-deep) 100%);
-    border: 1px solid rgba(200, 162, 74, 0.28);
+    border: none;
+    border-bottom: 1px solid rgba(200, 162, 74, 0.28);
     box-shadow:
       0 14px 36px -12px rgba(7, 37, 27, 0.55),
       0 2px 8px -2px rgba(0, 0, 0, 0.2),
@@ -77,7 +83,6 @@
   .nav-pill.is-scrolled {
     padding-top: 0.62rem;
     padding-bottom: 0.68rem;
-    padding-left: 1.5rem;
     background: linear-gradient(135deg, #14503a 0%, var(--nav-green-deep) 100%);
     box-shadow:
       0 18px 42px -14px rgba(7, 37, 27, 0.65),
@@ -92,19 +97,14 @@
   }
 
   .nav-logo-mark {
-    padding: 0.45rem 0.75rem;
+    padding: 0.55rem 0.9rem;
     background: #fff;
     border: none;
     border-radius: 14px;
     box-shadow:
-      0 4px 16px rgba(0, 0, 0, 0.18),
-      inset 0 1px 0 rgba(255, 255, 255, 0.85);
-  }
-
-  .nav-logo-mark img {
-    height: var(--nav-logo-h);
-    width: auto;
-    max-width: var(--nav-logo-w);
+      0 4px 18px rgba(0, 0, 0, 0.18),
+      0 1px 0 rgba(255, 255, 255, 0.6) inset;
+    isolation: isolate;
   }
 
   .nav-desktop {
@@ -131,6 +131,11 @@
   display: inline-flex;
   align-items: center;
   justify-content: flex-start;
+  line-height: 0;
+}
+
+.nav-logo-mark picture {
+  display: inline-flex;
   line-height: 0;
 }
 
@@ -288,6 +293,12 @@
 
   .nav-btn-wa .nav-btn-icon {
     color: #fff;
+    flex-shrink: 0;
+  }
+
+  .nav-btn-wa.nav-btn-contact {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.3px;
   }
 
   .nav-btn-quote {
@@ -555,5 +566,18 @@
   .nav-mlink,
   .nav-mlink-bar {
     transition: none;
+  }
+}
+
+/* Desktop logo — same HD sizing as footer; must follow base img rules */
+@media (min-width: 981px) {
+  .nav-logo-mark picture,
+  .nav-logo-mark img {
+    height: clamp(3.75rem, 6vw, 5.25rem);
+    width: auto;
+    max-width: min(20rem, 42vw);
+    display: block;
+    object-fit: contain;
+    object-position: left center;
   }
 }

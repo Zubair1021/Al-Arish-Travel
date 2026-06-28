@@ -3,13 +3,28 @@ import { env } from "./config/env.js";
 import { connectDB } from "./config/db.js";
 import { Admin } from "./models/Admin.js";
 import { Package } from "./models/Package.js";
+import { PackageCategory } from "./models/PackageCategory.js";
 import { Settings } from "./models/Settings.js";
+
+const seedCategories = [
+  { slug: "5-star-umrah", label: "5 Star Umrah", sortOrder: 1 },
+  { slug: "4-star-umrah", label: "4 Star Umrah", sortOrder: 2 },
+  { slug: "family-umrah", label: "Family Umrah", sortOrder: 3 },
+  { slug: "december-umrah", label: "December Umrah", sortOrder: 4 },
+];
+
+const legacyCategoryMap = {
+  "4-star": "4-star-umrah",
+  "5-star": "5-star-umrah",
+  family: "family-umrah",
+  ramadan: "december-umrah",
+};
 
 const seedPackages = [
   {
     slug: "umrah-4-star",
     name: "4-Star Umrah",
-    category: "4-star",
+    category: "4-star-umrah",
     tag: "Best Value",
     imageKind: "preset",
     imageValue: "pkg-4star",
@@ -24,7 +39,7 @@ const seedPackages = [
   {
     slug: "umrah-5-star",
     name: "5-Star Umrah",
-    category: "5-star",
+    category: "5-star-umrah",
     tag: "Premium",
     imageKind: "preset",
     imageValue: "pkg-5star",
@@ -39,7 +54,7 @@ const seedPackages = [
   {
     slug: "umrah-ramadan",
     name: "Ramadan Umrah",
-    category: "ramadan",
+    category: "december-umrah",
     tag: "Limited Seats",
     imageKind: "preset",
     imageValue: "pkg-ramadan",
@@ -54,7 +69,7 @@ const seedPackages = [
   {
     slug: "umrah-family",
     name: "Family Package",
-    category: "family",
+    category: "family-umrah",
     tag: "Family",
     imageKind: "preset",
     imageValue: "pkg-family",
@@ -83,6 +98,23 @@ export async function ensureAdmin() {
   return admin;
 }
 
+export async function ensureCategories() {
+  for (const data of seedCategories) {
+    const existing = await PackageCategory.findOne({ slug: data.slug });
+    if (!existing) {
+      await PackageCategory.create(data);
+      console.log(`[seed] Created category: ${data.slug}`);
+    }
+  }
+
+  for (const [legacy, next] of Object.entries(legacyCategoryMap)) {
+    const result = await Package.updateMany({ category: legacy }, { category: next });
+    if (result.modifiedCount > 0) {
+      console.log(`[seed] Migrated ${result.modifiedCount} package(s) from ${legacy} → ${next}`);
+    }
+  }
+}
+
 export async function ensurePackages() {
   for (const data of seedPackages) {
     const existing = await Package.findOne({ slug: data.slug });
@@ -100,6 +132,7 @@ export async function ensureSettings() {
 
 export async function runSeed() {
   await ensureAdmin();
+  await ensureCategories();
   await ensurePackages();
   await ensureSettings();
 }

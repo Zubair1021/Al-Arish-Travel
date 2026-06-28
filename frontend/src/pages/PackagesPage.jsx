@@ -10,9 +10,16 @@ import { usePackages } from '../context/PackagesContext'
 import { useSettings } from '../context/SettingsContext'
 
 export default function PackagesPage() {
-  const { packages } = usePackages()
+  const { packages, categories } = usePackages()
   const { settings } = useSettings()
   const meta = PAGE_META.packages
+  const categoryNames = categories
+    .filter((cat) => cat.id !== 'all')
+    .map((cat) => cat.label)
+    .join(', ')
+  const subtitle = categoryNames
+    ? `Browse our ${categoryNames} packages. Every package includes flights, hotels and transport.`
+    : 'Browse our curated Umrah packages. Every package includes flights, hotels and transport.'
 
   return (
     <>
@@ -33,7 +40,7 @@ export default function PackagesPage() {
       <PageHero
         eyebrow="All Inclusive Pilgrimage"
         title="Umrah Packages"
-        subtitle="Choose from our curated 4-star, 5-star, Ramadan and family-friendly Umrah packages. Every package includes flights, hotels and transport."
+        subtitle={subtitle}
         badges={['Flights included', 'Hotels near Haram', 'UK based support']}
       />
 

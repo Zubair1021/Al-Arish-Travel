@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 
-export const PACKAGE_CATEGORIES = ["4-star", "5-star", "ramadan", "family"];
 export const PACKAGE_IMAGE_PRESETS = [
   "pkg-4star",
   "pkg-5star",
@@ -14,8 +13,8 @@ const packageSchema = new mongoose.Schema(
     name: { type: String, required: true, trim: true },
     category: {
       type: String,
-      enum: PACKAGE_CATEGORIES,
       required: true,
+      trim: true,
     },
     tag: { type: String, trim: true },
     imageKind: {

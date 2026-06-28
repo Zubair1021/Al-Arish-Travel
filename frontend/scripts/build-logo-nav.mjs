@@ -13,7 +13,7 @@ const TARGET_WIDTH = 1280;
 const buf = await sharp(SRC)
   .trim({ threshold: 12 })
   .resize({ width: TARGET_WIDTH, withoutEnlargement: true })
-  .png({ compressionLevel: 9, quality: 100, effort: 10 })
+  .png({ compressionLevel: 9, quality: 100, effort: 10, palette: false })
   .toBuffer();
 
 await writeFile(join(OUT), buf);

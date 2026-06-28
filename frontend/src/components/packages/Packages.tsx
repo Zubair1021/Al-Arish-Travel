@@ -5,7 +5,7 @@ import PackageCard from "./PackageCard";
 import PackageCardSkeleton from "./PackageCardSkeleton";
 import Loader from "../ui/Loader";
 import { usePackages } from "../../context/PackagesContext";
-import type { Package, PackageCategory } from "./packageData";
+import type { Package } from "./packageData";
 import "./Packages.css";
 
 const gridVariants = {
@@ -42,7 +42,7 @@ export default function Packages({
 }: PackagesProps) {
   const navigate = useNavigate();
   const { packages, categories, loading } = usePackages();
-  const [activeCategory, setActiveCategory] = useState<"all" | PackageCategory>("all");
+  const [activeCategory, setActiveCategory] = useState<string>("all");
 
   const sourcePackages: Package[] = useMemo(() => {
     if (featuredOnly) {
@@ -90,7 +90,7 @@ export default function Packages({
                 role="tab"
                 aria-selected={activeCategory === cat.id}
                 className={`pkgs-filter${activeCategory === cat.id ? " is-active" : ""}`}
-                onClick={() => setActiveCategory(cat.id as "all" | PackageCategory)}
+                onClick={() => setActiveCategory(cat.id)}
               >
                 {cat.label}
                 {cat.id !== "all" && (

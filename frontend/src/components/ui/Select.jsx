@@ -22,6 +22,8 @@ export default function Select({
   name,
   ariaLabel,
   className = '',
+  dropdownClassName = '',
+  dropdownMinWidth = 0,
 }) {
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState(-1)
@@ -191,13 +193,13 @@ export default function Select({
         createPortal(
           <div
             ref={dropdownRef}
-            className={`ui-select-pop ${themeClass}${pos.openUp ? ' is-up' : ''}`}
+            className={`ui-select-pop ${themeClass}${pos.openUp ? ' is-up' : ''} ${dropdownClassName}`.trim()}
             style={{
               position: 'fixed',
               top: pos.openUp ? undefined : pos.top,
               bottom: pos.openUp ? window.innerHeight - pos.top : undefined,
               left: pos.left,
-              width: pos.width,
+              width: Math.max(pos.width, dropdownMinWidth),
               maxHeight: pos.maxHeight,
             }}
             role="listbox"

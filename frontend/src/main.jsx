@@ -20,6 +20,7 @@ const AdminLogin = lazy(() => import('./admin/AdminLogin.jsx'))
 const AdminLayout = lazy(() => import('./admin/AdminLayout.jsx'))
 const AdminDashboard = lazy(() => import('./admin/AdminDashboard.jsx'))
 const AdminPackages = lazy(() => import('./admin/AdminPackages.jsx'))
+const AdminCategories = lazy(() => import('./admin/AdminCategories.jsx'))
 const AdminSubmissions = lazy(() => import('./admin/AdminSubmissions.jsx'))
 const AdminSettings = lazy(() => import('./admin/AdminSettings.jsx'))
 
@@ -38,6 +39,7 @@ createRoot(document.getElementById('root')).render(
             <Route element={<AdminLayout />}>
               <Route index element={<AdminDashboard />} />
               <Route path="packages" element={<AdminPackages />} />
+              <Route path="categories" element={<AdminCategories />} />
               <Route path="submissions" element={<AdminSubmissions />} />
               <Route path="settings" element={<AdminSettings />} />
             </Route>

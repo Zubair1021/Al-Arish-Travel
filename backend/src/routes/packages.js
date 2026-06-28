@@ -1,10 +1,11 @@
 import { Router } from "express";
-import {
-  PACKAGE_CATEGORIES,
-  PACKAGE_IMAGE_PRESETS,
-  Package,
-} from "../models/Package.js";
+import { PACKAGE_IMAGE_PRESETS, Package } from "../models/Package.js";
 import { requireAdmin } from "../middleware/auth.js";
+import {
+  categoryExists,
+  getAdminCategoryOptions,
+  getPublicCategoryOptions,
+} from "../utils/categoryHelpers.js";
 
 const router = Router();
 
@@ -28,7 +29,7 @@ async function ensureUniqueSlug(base, ignoreId) {
   }
 }
 
-function validateBody(body, { partial = false } = {}) {
+async function validateBody(body, { partial = false } = {}) {
   const errors = [];
   const requiredFields = ["name", "category", "duration", "shortDescription", "price", "imageValue"];
   if (!partial) {
@@ -38,8 +39,11 @@ function validateBody(body, { partial = false } = {}) {
       }
     }
   }
-  if (body.category !== undefined && !PACKAGE_CATEGORIES.includes(body.category)) {
-    errors.push(`category must be one of ${PACKAGE_CATEGORIES.join(", ")}`);
+  if (body.category !== undefined) {
+    const valid = await categoryExists(body.category);
+    if (!valid) {
+      errors.push("category must match an existing package category");
+    }
   }
   if (body.imageKind !== undefined && !["preset", "url"].includes(body.imageKind)) {
     errors.push("imageKind must be 'preset' or 'url'");
@@ -70,24 +74,20 @@ router.get("/public", async (_req, res) => {
     sortOrder: 1,
     createdAt: 1,
   });
+  const categories = await getPublicCategoryOptions();
   res.json({
     packages: packages.map((p) => p.toPublicJSON()),
-    categories: [
-      { id: "all", label: "All Packages" },
-      { id: "4-star", label: "4-Star Umrah" },
-      { id: "5-star", label: "5-Star Umrah" },
-      { id: "ramadan", label: "Ramadan Umrah" },
-      { id: "family", label: "Family Package" },
-    ],
+    categories,
   });
 });
 
 router.get("/", requireAdmin, async (_req, res) => {
   const packages = await Package.find().sort({ sortOrder: 1, createdAt: 1 });
+  const categories = await getAdminCategoryOptions();
   res.json({
     packages: packages.map((p) => p.toAdminJSON()),
     presets: PACKAGE_IMAGE_PRESETS,
-    categories: PACKAGE_CATEGORIES,
+    categories,
     featuredLimit: 4,
   });
 });
@@ -95,7 +95,7 @@ router.get("/", requireAdmin, async (_req, res) => {
 router.post("/", requireAdmin, async (req, res) => {
   const body = req.body || {};
   body.imageKind = body.imageKind || "preset";
-  const errors = validateBody(body);
+  const errors = await validateBody(body);
   if (errors.length) return res.status(400).json({ message: errors.join("; ") });
 
   const slug = await ensureUniqueSlug(body.slug || slugify(body.name));
@@ -134,7 +134,7 @@ router.put("/:id", requireAdmin, async (req, res) => {
   if (!pkg) return res.status(404).json({ message: "Package not found" });
 
   const body = req.body || {};
-  const errors = validateBody(body, { partial: true });
+  const errors = await validateBody(body, { partial: true });
   if (errors.length) return res.status(400).json({ message: errors.join("; ") });
 
   if (body.featured === true && !pkg.featured) {

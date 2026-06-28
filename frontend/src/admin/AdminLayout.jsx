@@ -9,6 +9,7 @@ import logoWhite from '../assets/images/logo-white.jpg'
 const NAV = [
   { to: '/admin', label: 'Dashboard', end: true, icon: 'home' },
   { to: '/admin/packages', label: 'Packages', icon: 'box' },
+  { to: '/admin/categories', label: 'Categories', icon: 'tag' },
   { to: '/admin/submissions', label: 'Submissions', icon: 'inbox', counter: 'unread' },
   { to: '/admin/settings', label: 'Settings', icon: 'cog' },
 ]
@@ -38,6 +39,13 @@ function Icon({ name }) {
         <svg {...common}>
           <path d="M3 7l9-4 9 4-9 4-9-4z" />
           <path d="M3 7v10l9 4 9-4V7" />
+        </svg>
+      )
+    case 'tag':
+      return (
+        <svg {...common}>
+          <path d="M4 9V4h5" />
+          <path d="M20 13 9 4 4 9l11 11 5-7Z" />
         </svg>
       )
     case 'inbox':

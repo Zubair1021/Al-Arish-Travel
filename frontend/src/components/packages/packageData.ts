@@ -1,6 +1,6 @@
 import { resolvePackageImage } from "./packageImages";
 
-export type PackageCategory = "4-star" | "5-star" | "ramadan" | "family";
+export type PackageCategory = string;
 
 export interface ApiPackage {
   id: string;
@@ -21,16 +21,12 @@ export interface Package extends ApiPackage {
 }
 
 export interface CategoryOption {
-  id: "all" | PackageCategory;
+  id: string;
   label: string;
 }
 
 export const DEFAULT_CATEGORIES: CategoryOption[] = [
   { id: "all", label: "All Packages" },
-  { id: "4-star", label: "4-Star Umrah" },
-  { id: "5-star", label: "5-Star Umrah" },
-  { id: "ramadan", label: "Ramadan Umrah" },
-  { id: "family", label: "Family Package" },
 ];
 
 export function hydratePackage(pkg: ApiPackage): Package {
@@ -42,4 +38,11 @@ export function hydratePackage(pkg: ApiPackage): Package {
 
 export function findPackageBySlug(packages: Package[], slug: string): Package | undefined {
   return packages.find((pkg) => pkg.id === slug);
+}
+
+export function buildCategoryLabelMap(categories: CategoryOption[]) {
+  return categories.reduce<Record<string, string>>((acc, cat) => {
+    if (cat.id !== "all") acc[cat.id] = cat.label;
+    return acc;
+  }, {});
 }

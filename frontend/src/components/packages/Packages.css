@@ -221,6 +221,15 @@
   line-height: 1.25;
   color: var(--p-green-deep);
 }
+.pkg-category {
+  display: inline-block;
+  margin-bottom: 0.3rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.35px;
+  text-transform: uppercase;
+  color: var(--p-gold, #a87f2c);
+}
 .pkg-duration {
   display: inline-flex;
   align-items: center;

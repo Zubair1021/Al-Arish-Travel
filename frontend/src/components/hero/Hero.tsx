@@ -1,14 +1,12 @@
-import { useEffect, useRef, useState } from "react";
-import { animate, motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
   ShieldCheckIcon,
-  FlagIcon,
-  ClockIcon,
   ArrowRightIcon,
   StarIcon,
 } from "./heroIcons";
 import meccaImg from "../../assets/images/mecca-hero.jpg";
+import HeroQuoteForm from "./HeroQuoteForm";
 import "./Hero.css";
 
 const container = {
@@ -26,41 +24,6 @@ const fadeUp = {
     transition: { type: "spring", stiffness: 260, damping: 28 },
   },
 };
-
-const trustBadges = [
-  { icon: ShieldCheckIcon, label: "ATOL Protected" },
-  { icon: FlagIcon, label: "UK Based" },
-  { icon: ClockIcon, label: "24/7 Support" },
-];
-
-const stats = [
-  { to: 10, suffix: "+", label: "Years Experience" },
-  { to: 5000, suffix: "+", label: "Pilgrims Served" },
-  { to: 100, suffix: "%", label: "UK Support" },
-];
-
-function Counter({ to, suffix }: { to: number; suffix: string }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-40px" });
-  const [value, setValue] = useState(0);
-
-  useEffect(() => {
-    if (!inView) return;
-    const controls = animate(0, to, {
-      duration: 1.8,
-      ease: [0.16, 1, 0.3, 1],
-      onUpdate: (v) => setValue(Math.floor(v)),
-    });
-    return () => controls.stop();
-  }, [inView, to]);
-
-  return (
-    <span ref={ref}>
-      {value.toLocaleString()}
-      {suffix}
-    </span>
-  );
-}
 
 export default function Hero() {
   return (
@@ -85,7 +48,8 @@ export default function Hero() {
       </div>
 
       <div className="hero-inner">
-        <div className="hero-grid">
+        <div className="hero-stage">
+          <div className="hero-grid">
           <motion.div
             className="hero-content"
             variants={container}
@@ -115,9 +79,9 @@ export default function Hero() {
                 </Link>
               </motion.div>
               <motion.div whileHover={{ y: -3 }} whileTap={{ scale: 0.97 }}>
-                <Link to="/contact" className="hero-btn hero-btn-ghost">
+                <a href="#hero-quote" className="hero-btn hero-btn-ghost">
                   Get Free Quote
-                </Link>
+                </a>
               </motion.div>
             </motion.div>
 {/* 
@@ -180,23 +144,9 @@ export default function Hero() {
             </motion.div>
           </motion.div>
         </div>
+        </div>
 
-        <motion.div
-          className="hero-stats"
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-60px" }}
-          variants={container}
-        >
-          {stats.map((stat) => (
-            <motion.div key={stat.label} className="hero-stat" variants={fadeUp}>
-              <div className="hero-stat-num">
-                <Counter to={stat.to} suffix={stat.suffix} />
-              </div>
-              <div className="hero-stat-label">{stat.label}</div>
-            </motion.div>
-          ))}
-        </motion.div>
+        <HeroQuoteForm />
       </div>
     </section>
   );

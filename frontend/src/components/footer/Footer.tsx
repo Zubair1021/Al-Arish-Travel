@@ -4,7 +4,7 @@ import FooterLinks from "./FooterLinks";
 import SocialIcons from "./SocialIcons";
 import { footerColumns } from "./footerData";
 import { useSettings } from "../../context/SettingsContext";
-import logo from "../../assets/images/logo-nav.png";
+import logo from "../../assets/images/logo-footer.png";
 import "./Footer.css";
 
 export default function Footer() {

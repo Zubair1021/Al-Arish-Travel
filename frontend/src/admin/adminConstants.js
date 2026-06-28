@@ -31,13 +31,6 @@ export const TYPE_LABELS = TYPE_OPTIONS.reduce((acc, item) => {
   return acc
 }, {})
 
-export const CATEGORY_LABELS = {
-  '4-star': '4-Star Umrah',
-  '5-star': '5-Star Umrah',
-  ramadan: 'Ramadan Umrah',
-  family: 'Family Package',
-}
-
 export const PRESET_OPTIONS = [
   { value: 'pkg-4star', label: '4-Star (Makkah view)' },
   { value: 'pkg-5star', label: '5-Star (Hotel suite)' },

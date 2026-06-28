@@ -8,7 +8,7 @@ import {
   updatePackage,
 } from '../api/packages'
 import { resolvePackageImage } from '../components/packages/packageImages'
-import { CATEGORY_LABELS, PRESET_OPTIONS } from './adminConstants'
+import { PRESET_OPTIONS } from './adminConstants'
 import { useToast } from './ToastContext'
 import { useConfirm } from '../context/ConfirmContext'
 import Loader from './components/Loader'
@@ -17,7 +17,7 @@ import Select from '../components/ui/Select'
 
 const EMPTY_FORM = {
   name: '',
-  category: '4-star',
+  category: '',
   tag: '',
   imageKind: 'preset',
   imageValue: 'pkg-4star',
@@ -44,6 +44,7 @@ export default function AdminPackages() {
   const { push } = useToast()
   const confirm = useConfirm()
   const [packages, setPackages] = useState([])
+  const [categoryOptions, setCategoryOptions] = useState([])
   const [loading, setLoading] = useState(true)
   const [editing, setEditing] = useState(null)
   const [form, setForm] = useState(EMPTY_FORM)
@@ -56,6 +57,7 @@ export default function AdminPackages() {
     try {
       const data = await fetchAdminPackages()
       setPackages(data?.packages || [])
+      setCategoryOptions(data?.categories || [])
     } catch (e) {
       push({ title: 'Failed to load packages', body: e.message, tone: 'error' })
     } finally {
@@ -66,6 +68,15 @@ export default function AdminPackages() {
   useEffect(() => {
     load()
   }, [load])
+
+  const categoryLabels = useMemo(
+    () =>
+      categoryOptions.reduce((acc, cat) => {
+        acc[cat.value] = cat.label
+        return acc
+      }, {}),
+    [categoryOptions],
+  )
 
   const featuredCount = useMemo(
     () => packages.filter((p) => p.featured).length,
@@ -105,7 +116,10 @@ export default function AdminPackages() {
   )
 
   const startCreate = () => {
-    setForm({ ...EMPTY_FORM })
+    setForm({
+      ...EMPTY_FORM,
+      category: categoryOptions[0]?.value || '',
+    })
     setEditing('new')
   }
 
@@ -223,6 +237,7 @@ export default function AdminPackages() {
           saving={saving}
           isNew={editing === 'new'}
           featuredCount={featuredCount}
+          categoryOptions={categoryOptions}
         />
       ) : (
         <>
@@ -243,7 +258,7 @@ export default function AdminPackages() {
                 onChange={(v) => setFilters({ ...filters, category: v })}
                 options={[
                   { value: 'all', label: 'All categories' },
-                  ...Object.entries(CATEGORY_LABELS).map(([value, label]) => ({ value, label })),
+                  ...categoryOptions.map(({ value, label }) => ({ value, label })),
                 ]}
                 ariaLabel="Filter by category"
               />
@@ -299,7 +314,7 @@ export default function AdminPackages() {
                         </span>
                       </div>
                       <p className="adm-pkg-meta">
-                        {CATEGORY_LABELS[pkg.category] || pkg.category} · {pkg.duration}
+                        {categoryLabels[pkg.category] || pkg.category} · {pkg.duration}
                       </p>
                       <p className="adm-pkg-desc">{pkg.shortDescription}</p>
                       <div className="adm-pkg-actions">
@@ -344,7 +359,7 @@ export default function AdminPackages() {
   )
 }
 
-function PackageForm({ form, setForm, onSubmit, onCancel, saving, isNew, featuredCount }) {
+function PackageForm({ form, setForm, onSubmit, onCancel, saving, isNew, featuredCount, categoryOptions }) {
   const update = (key) => (event) => {
     const value =
       event.target.type === 'checkbox' ? event.target.checked : event.target.value
@@ -377,8 +392,9 @@ function PackageForm({ form, setForm, onSubmit, onCancel, saving, isNew, feature
             theme="admin"
             value={form.category}
             onChange={(v) => setForm((f) => ({ ...f, category: v }))}
-            options={Object.entries(CATEGORY_LABELS).map(([value, label]) => ({ value, label }))}
+            options={categoryOptions.map(({ value, label }) => ({ value, label }))}
             ariaLabel="Category"
+            placeholder="Select category"
           />
         </div>
 

@@ -4,6 +4,7 @@ import { env } from "./src/config/env.js";
 import { connectDB } from "./src/config/db.js";
 import { runSeed } from "./src/seed.js";
 import authRoutes from "./src/routes/auth.js";
+import categoryRoutes from "./src/routes/categories.js";
 import packageRoutes from "./src/routes/packages.js";
 import submissionRoutes from "./src/routes/submissions.js";
 import settingsRoutes from "./src/routes/settings.js";
@@ -31,6 +32,7 @@ app.get("/api/health", (_req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
+app.use("/api/categories", categoryRoutes);
 app.use("/api/packages", packageRoutes);
 app.use("/api/submissions", submissionRoutes);
 app.use("/api/settings", settingsRoutes);

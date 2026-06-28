@@ -1,11 +1,10 @@
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
 import NavLinks from "./NavLinks";
 import { useSettings } from "../../context/SettingsContext";
-import { WhatsAppIcon, SparkIcon } from "./icons";
+import { WhatsAppIcon } from "./icons";
 
 export default function DesktopNav() {
-  const { whatsappLink } = useSettings();
+  const { settings, whatsappLink } = useSettings();
 
   return (
     <div className="nav-desktop">
@@ -18,20 +17,14 @@ export default function DesktopNav() {
           href={whatsappLink || "#"}
           target="_blank"
           rel="noopener noreferrer"
-          className="nav-btn nav-btn-wa"
+          className="nav-btn nav-btn-wa nav-btn-contact"
+          aria-label={`Chat on WhatsApp: ${settings.phone}`}
           whileHover={{ y: -2 }}
           whileTap={{ scale: 0.96 }}
         >
           <WhatsAppIcon className="nav-btn-icon" />
-          WhatsApp
+          {settings.phone}
         </motion.a>
-
-        <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.96 }}>
-          <Link to="/contact" className="nav-btn nav-btn-quote">
-            <SparkIcon className="nav-btn-icon" />
-            Get Quote
-          </Link>
-        </motion.div>
       </div>
     </div>
   );

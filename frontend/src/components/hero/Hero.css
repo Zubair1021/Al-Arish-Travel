@@ -1,18 +1,34 @@
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .hero {
   --h-green: #18493a;
   --h-green-deep: #0d3326;
   --h-gold: #c8a24a;
   --h-gold-soft: #e7d29a;
   --h-ink: #3c4742;
+  --hero-top-space: clamp(1.25rem, 3.5vh, 2.25rem);
+  --hero-bottom-space: clamp(1.5rem, 3vh, 2.5rem);
 
   position: relative;
-  overflow: hidden;
+  overflow-x: clip;
   isolation: isolate;
   box-sizing: border-box;
-  min-height: 100svh;
   display: flex;
   flex-direction: column;
-  padding: calc(var(--nav-offset) + var(--nav-gap, 1rem)) clamp(1rem, 3vw, 2rem) 1.25rem;
+  padding:
+    calc(var(--nav-offset) + var(--nav-gap, 1rem) + var(--hero-top-space))
+    clamp(1rem, 3vw, 2rem)
+    var(--hero-bottom-space);
   font-family: var(--sans, system-ui, "Segoe UI", Roboto, sans-serif);
   color: var(--h-ink);
 }
@@ -71,10 +87,19 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: clamp(0.75rem, 2vh, 1.25rem);
+  justify-content: flex-start;
+  gap: 0;
+}
+.hero-stage {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: calc(
+    100svh - var(--nav-offset) - var(--nav-gap, 1rem) - var(--hero-top-space)
+  );
 }
 .hero-grid {
+  width: 100%;
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
   gap: clamp(1rem, 2.5vw, 2rem);
@@ -297,47 +322,329 @@
   color: #6b7670;
 }
 
-/* ---------- Stats ---------- */
-.hero-stats {
-  margin-top: auto;
-  padding-top: clamp(0.75rem, 2vh, 1.25rem);
+/* ---------- Quote form (two-row layout) ---------- */
+.hero-quote {
+  width: 100%;
+  margin-top: clamp(1.5rem, 4vh, 2.5rem);
+  scroll-margin-top: calc(var(--nav-offset) + var(--nav-gap, 1rem) + 0.75rem);
+}
+.hero-quote-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  padding: clamp(1.15rem, 2.2vw, 1.5rem) clamp(1.15rem, 2.4vw, 1.65rem);
+  border-radius: 24px;
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.97) 0%, rgba(249, 247, 240, 0.92) 100%);
+  -webkit-backdrop-filter: blur(22px) saturate(185%);
+  backdrop-filter: blur(22px) saturate(185%);
+  border: 1px solid rgba(200, 162, 74, 0.32);
+  box-shadow:
+    0 32px 64px -32px rgba(13, 51, 38, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+}
+.hero-quote-shine {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--h-gold) 20%,
+    var(--h-gold-soft) 50%,
+    var(--h-gold) 80%,
+    transparent 100%
+  );
+  opacity: 0.9;
+}
+.hero-quote-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(24, 73, 58, 0.1);
+}
+.hero-quote-head-main {
+  flex: 1;
+  min-width: 0;
+}
+.hero-quote-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  width: fit-content;
+  padding: 0.32rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.67rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--h-green-deep);
+  background: linear-gradient(135deg, rgba(200, 162, 74, 0.2), rgba(200, 162, 74, 0.06));
+  border: 1px solid rgba(200, 162, 74, 0.38);
+}
+.hero-quote-chip svg {
+  width: 12px;
+  height: 12px;
+  color: var(--h-gold);
+}
+.hero-quote-title {
+  display: block;
+  margin: 0.5rem 0 0;
+  font-size: clamp(1.15rem, 2vw, 1.35rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+  color: var(--h-green-deep);
+}
+.hero-quote-sub {
+  margin: 0.4rem 0 0;
+  max-width: 36rem;
+  font-size: 0.84rem;
+  line-height: 1.5;
+  font-weight: 500;
+  color: #6b7670;
+}
+.hero-quote-perks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.4rem;
+  flex-shrink: 0;
+  max-width: 280px;
+}
+.hero-quote-perks li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.32rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--h-green);
+  background: rgba(24, 73, 58, 0.06);
+  border: 1px solid rgba(24, 73, 58, 0.12);
+  white-space: nowrap;
+}
+.hero-quote-perks svg {
+  width: 11px;
+  height: 11px;
+  flex-shrink: 0;
+}
+.hero-quote-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+.hero-quote-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.75rem;
+  align-items: start;
 }
-.hero-stat {
-  text-align: center;
-  padding: 0.85rem 0.75rem;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.65);
-  -webkit-backdrop-filter: blur(14px) saturate(160%);
-  backdrop-filter: blur(14px) saturate(160%);
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  box-shadow: 0 14px 34px -22px rgba(13, 51, 38, 0.4);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+.hero-quote-row-action {
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 0.85rem;
+  padding-top: 0.15rem;
+  border-top: 1px dashed rgba(24, 73, 58, 0.1);
 }
-.hero-stat:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 20px 40px -22px rgba(13, 51, 38, 0.5);
+.hero-quote-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
 }
-.hero-stat-num {
-  font-size: clamp(1.5rem, 3vw, 2.1rem);
-  font-weight: 800;
-  letter-spacing: -0.8px;
+.hero-quote-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.45px;
+  text-transform: uppercase;
+  color: var(--h-green);
+  padding-left: 0.1rem;
+}
+.hero-quote-label svg {
+  width: 13px;
+  height: 13px;
+  color: var(--h-gold);
+}
+.hero-quote-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.hero-quote-input-wrap > svg {
+  position: absolute;
+  left: 0.85rem;
+  width: 16px;
+  height: 16px;
+  color: var(--h-gold);
+  pointer-events: none;
+  z-index: 1;
+}
+.hero-quote-input-wrap input {
+  width: 100%;
+  box-sizing: border-box;
+  height: 46px;
+  padding: 0 0.85rem 0 2.5rem;
+  border-radius: 13px;
+  border: 1.5px solid rgba(24, 73, 58, 0.14);
+  background: #fff;
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 500;
   color: var(--h-green-deep);
+  box-shadow: 0 1px 2px rgba(13, 51, 38, 0.04);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
-.hero-stat-label {
-  margin-top: 0.2rem;
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--h-ink);
+.hero-quote-input-wrap input::placeholder {
+  color: #9aa39f;
+  font-weight: 500;
+}
+.hero-quote-input-wrap input:focus {
+  outline: none;
+  border-color: rgba(200, 162, 74, 0.7);
+  box-shadow: 0 0 0 3px rgba(200, 162, 74, 0.16);
+}
+.hero-quote-input-wrap input.has-error {
+  border-color: #d94d4d;
+  background: #fff8f8;
+}
+.hero-quote-field .field-error {
+  margin: 0;
+  font-size: 0.68rem;
+}
+.hero-quote-field-select {
+  min-width: 0;
+}
+.hero-quote-field-select .hero-quote-select.ui-select-public .ui-select-trigger {
+  background: #fff;
+  border: 1.5px solid rgba(24, 73, 58, 0.14);
+  border-radius: 13px;
+  min-height: 46px;
+  font-size: 0.88rem;
+  box-shadow: 0 1px 2px rgba(13, 51, 38, 0.04);
+}
+.hero-quote-field-select .hero-quote-select .ui-select-value {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.hero-quote-field-select .hero-quote-select.ui-select-public.is-open .ui-select-trigger,
+.hero-quote-field-select .hero-quote-select.ui-select-public .ui-select-trigger:focus-visible {
+  border-color: rgba(200, 162, 74, 0.7);
+  box-shadow: 0 0 0 3px rgba(200, 162, 74, 0.16);
+  background: #fff;
+}
+.hero-quote-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 46px;
+  min-width: 168px;
+  padding: 0 1.5rem;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  white-space: nowrap;
+  color: #fff;
+  background: linear-gradient(135deg, var(--h-gold) 0%, #a87f2c 40%, var(--h-green) 100%);
+  background-size: 200% 100%;
+  background-position: 0% 50%;
+  box-shadow:
+    0 16px 34px -14px rgba(168, 127, 44, 0.7),
+    0 8px 20px -10px rgba(13, 51, 38, 0.45);
+  transition: box-shadow 0.25s ease, transform 0.25s ease, opacity 0.25s ease, background-position 0.35s ease;
+}
+.hero-quote-submit:hover:not(:disabled) {
+  background-position: 100% 50%;
+  box-shadow:
+    0 20px 38px -12px rgba(168, 127, 44, 0.8),
+    0 10px 24px -10px rgba(13, 51, 38, 0.5);
+  transform: translateY(-2px);
+}
+.hero-quote-submit.is-success {
+  background: linear-gradient(135deg, #1f6b52, var(--h-green-deep));
+  background-position: 0% 50%;
+}
+.hero-quote-submit:disabled {
+  opacity: 0.9;
+  cursor: not-allowed;
+  transform: none;
+}
+.hero-quote-submit-icon {
+  width: 17px;
+  height: 17px;
+}
+.hero-quote-spinner {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  animation: hero-quote-spin 0.8s linear infinite;
+}
+@keyframes hero-quote-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Hero quote dropdown — portaled, needs global selectors */
+.hero-quote-select-pop .ui-select-option-label {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+  line-height: 1.35;
+}
+.hero-quote-select-pop .ui-select-option {
+  align-items: flex-start;
+  padding-top: 0.65rem;
+  padding-bottom: 0.65rem;
 }
 
 /* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .hero-quote-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .hero-quote-perks {
+    justify-content: flex-start;
+    max-width: none;
+  }
+  .hero-quote-row {
+    grid-template-columns: 1fr;
+  }
+  .hero-quote-row-action {
+    grid-template-columns: 1fr;
+  }
+  .hero-quote-submit {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
 @media (max-width: 920px) {
   .hero {
-    min-height: auto;
+    --hero-top-space: clamp(1rem, 2.5vh, 1.75rem);
     padding-bottom: 2rem;
+  }
+  .hero-stage {
+    align-items: flex-start;
+    padding-top: 0.25rem;
   }
   .hero-grid {
     grid-template-columns: 1fr;
@@ -362,9 +669,6 @@
 }
 
 @media (max-width: 560px) {
-  .hero-stats {
-    grid-template-columns: 1fr;
-  }
   .hero-float-rating {
     left: 10px;
   }

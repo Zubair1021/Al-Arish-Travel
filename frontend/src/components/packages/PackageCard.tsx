@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import type { Package } from "./packageData";
+import { usePackages } from "../../context/PackagesContext";
 import { CalendarIcon, ArrowRightIcon } from "./packageIcons";
 
 interface PackageCardProps {
@@ -22,6 +23,9 @@ const cardVariants = {
 };
 
 export default function PackageCard({ pkg, onViewDetails }: PackageCardProps) {
+  const { categories } = usePackages();
+  const categoryLabel = categories.find((cat) => cat.id === pkg.category)?.label;
+
   return (
     <motion.article
       className={`pkg-card${pkg.featured ? " is-featured" : ""}`}
@@ -40,7 +44,10 @@ export default function PackageCard({ pkg, onViewDetails }: PackageCardProps) {
 
       <div className="pkg-body">
         <div className="pkg-head">
-          <h3 className="pkg-name">{pkg.name}</h3>
+          <div>
+            {categoryLabel && <span className="pkg-category">{categoryLabel}</span>}
+            <h3 className="pkg-name">{pkg.name}</h3>
+          </div>
           <span className="pkg-duration">
             <CalendarIcon />
             {pkg.duration}

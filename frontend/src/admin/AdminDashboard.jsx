@@ -115,6 +115,10 @@ export default function AdminDashboard() {
             <strong>Manage packages</strong>
             <span>Create, edit, hide or feature packages on the homepage.</span>
           </Link>
+          <Link to="/admin/categories" className="adm-quick">
+            <strong>Package categories</strong>
+            <span>Add or edit category tabs shown on the packages page.</span>
+          </Link>
           <Link to="/admin/submissions" className="adm-quick">
             <strong>Review submissions</strong>
             <span>Read enquiries, update statuses and contact pilgrims.</span>
