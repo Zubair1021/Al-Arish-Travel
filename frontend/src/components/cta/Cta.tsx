@@ -141,7 +141,7 @@ export default function Cta() {
               </motion.div>
             </motion.div>
 
-            <motion.div
+            {/* <motion.div
               className="cta-trust"
               initial={{ opacity: 0, y: 14 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -161,8 +161,8 @@ export default function Cta() {
               <span className="cta-trust-item">
                 <CheckIcon />
                 <span>Fully protected</span>
-              </span>
-            </motion.div>
+              </span> */}
+            {/* </motion.div> */}
           </div>
         </motion.div>
       </div>

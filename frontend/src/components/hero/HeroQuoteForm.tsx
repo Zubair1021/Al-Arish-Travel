@@ -166,23 +166,23 @@ export default function HeroQuoteForm() {
 
         <header className="hero-quote-head">
           <div className="hero-quote-head-main">
-            <span className="hero-quote-chip">
+            {/* <span className="hero-quote-chip">
               <ClockIcon />
               Reply within 1 hour
-            </span>
+            </span> */}
             <strong className="hero-quote-title">Get Your Free Quote</strong>
             <p className="hero-quote-sub">
               Share your details and our UK team will prepare a personalised package.
             </p>
           </div>
-          <ul className="hero-quote-perks" aria-label="Benefits">
+          {/* <ul className="hero-quote-perks" aria-label="Benefits">
             <li>
               <ShieldCheckIcon />
               ATOL Protected
             </li>
             <li>No obligation</li>
             <li>UK support</li>
-          </ul>
+          </ul> */}
         </header>
 
         <form className="hero-quote-form" onSubmit={submit} noValidate>
