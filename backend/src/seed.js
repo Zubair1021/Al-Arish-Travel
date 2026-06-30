@@ -5,6 +5,7 @@ import { Admin } from "./models/Admin.js";
 import { Package } from "./models/Package.js";
 import { PackageCategory } from "./models/PackageCategory.js";
 import { Settings } from "./models/Settings.js";
+import { Testimonial } from "./models/Testimonial.js";
 
 const seedCategories = [
   { slug: "5-star-umrah", label: "5 Star Umrah", sortOrder: 1 },
@@ -83,6 +84,59 @@ const seedPackages = [
   },
 ];
 
+const seedTestimonials = [
+  {
+    name: "Ahmed Khan",
+    location: "London, UK",
+    rating: 5,
+    review:
+      "From visa to flights, everything was handled flawlessly. Our 5-star Umrah felt truly effortless and spiritual. May Allah reward the whole team.",
+    accentPrimary: "#1f6b50",
+    accentSecondary: "#0d3326",
+    sortOrder: 1,
+  },
+  {
+    name: "Fatima Begum",
+    location: "Birmingham, UK",
+    rating: 5,
+    review:
+      "The hotel was just steps from the Haram and the support was available day and night. I felt cared for at every single step of my journey.",
+    accentPrimary: "#cf9b3a",
+    accentSecondary: "#9a6f1f",
+    sortOrder: 2,
+  },
+  {
+    name: "Yusuf Patel",
+    location: "Leicester, UK",
+    rating: 5,
+    review:
+      "As a first-time pilgrim I had a hundred questions. Their scholars guided me with so much patience. Highly recommend Al Arish Travel.",
+    accentPrimary: "#2a7d8c",
+    accentSecondary: "#13414a",
+    sortOrder: 3,
+  },
+  {
+    name: "Aisha Rahman",
+    location: "Manchester, UK",
+    rating: 5,
+    review:
+      "We booked the family package and the kids were looked after beautifully. Stress-free, organised and genuinely warm people to deal with.",
+    accentPrimary: "#b5683f",
+    accentSecondary: "#7c3f1f",
+    sortOrder: 4,
+  },
+  {
+    name: "Bilal Ahmed",
+    location: "Bradford, UK",
+    rating: 5,
+    review:
+      "Direct flights and smooth transfers made all the difference. Transparent pricing with no hidden costs. Will definitely travel with them again.",
+    accentPrimary: "#3b6db5",
+    accentSecondary: "#1f3f7c",
+    sortOrder: 5,
+  },
+];
+
 export async function ensureAdmin() {
   const existing = await Admin.findOne({ email: env.adminEmail.toLowerCase() });
   if (existing) {
@@ -125,6 +179,15 @@ export async function ensurePackages() {
   }
 }
 
+export async function ensureTestimonials() {
+  if ((await Testimonial.countDocuments()) > 0) return;
+
+  for (const data of seedTestimonials) {
+    await Testimonial.create(data);
+    console.log(`[seed] Created testimonial: ${data.name}`);
+  }
+}
+
 export async function ensureSettings() {
   const settings = await Settings.getSingleton();
   console.log(`[seed] Settings ready (${settings._id})`);
@@ -134,6 +197,7 @@ export async function runSeed() {
   await ensureAdmin();
   await ensureCategories();
   await ensurePackages();
+  await ensureTestimonials();
   await ensureSettings();
 }
 

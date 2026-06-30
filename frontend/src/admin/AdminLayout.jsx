@@ -10,6 +10,7 @@ const NAV = [
   { to: '/admin', label: 'Dashboard', end: true, icon: 'home' },
   { to: '/admin/packages', label: 'Packages', icon: 'box' },
   { to: '/admin/categories', label: 'Categories', icon: 'tag' },
+  { to: '/admin/testimonials', label: 'Testimonials', icon: 'quote' },
   { to: '/admin/submissions', label: 'Submissions', icon: 'inbox', counter: 'unread' },
   { to: '/admin/settings', label: 'Settings', icon: 'cog' },
 ]
@@ -46,6 +47,13 @@ function Icon({ name }) {
         <svg {...common}>
           <path d="M4 9V4h5" />
           <path d="M20 13 9 4 4 9l11 11 5-7Z" />
+        </svg>
+      )
+    case 'quote':
+      return (
+        <svg {...common}>
+          <path d="M7.5 8.5h-3a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h3" />
+          <path d="M18.5 8.5h-3a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h3" />
         </svg>
       )
     case 'inbox':

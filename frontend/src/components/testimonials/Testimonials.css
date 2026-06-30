@@ -183,3 +183,10 @@
   border-radius: 6px;
   background: var(--t-gold);
 }
+
+.tst-empty {
+  text-align: center;
+  color: var(--t-muted);
+  font-size: 1rem;
+  margin: 0;
+}

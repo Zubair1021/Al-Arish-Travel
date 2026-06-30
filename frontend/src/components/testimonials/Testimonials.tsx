@@ -2,7 +2,8 @@ import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
 import TestimonialCard from "./TestimonialCard";
-import { testimonials } from "./testimonialData";
+import TestimonialCardSkeleton from "./TestimonialCardSkeleton";
+import { useTestimonials } from "../../context/TestimonialsContext";
 import "swiper/css";
 import "swiper/css/pagination";
 import "./Testimonials.css";
@@ -17,6 +18,8 @@ const headVariants = {
 };
 
 export default function Testimonials() {
+  const { testimonials, loading } = useTestimonials();
+
   return (
     <section id="testimonials" className="tst">
       <div className="tst-bg" aria-hidden="true">
@@ -40,26 +43,36 @@ export default function Testimonials() {
           </p>
         </motion.header>
 
-        <Swiper
-          className="tst-swiper"
-          modules={[Pagination, Autoplay]}
-          spaceBetween={24}
-          slidesPerView={1}
-          grabCursor
-          loop
-          autoplay={{ delay: 4500, disableOnInteraction: false }}
-          pagination={{ clickable: true }}
-          breakpoints={{
-            640: { slidesPerView: 2 },
-            1024: { slidesPerView: 3 },
-          }}
-        >
-          {testimonials.map((testimonial) => (
-            <SwiperSlide key={testimonial.id} className="tst-slide">
-              <TestimonialCard testimonial={testimonial} />
-            </SwiperSlide>
-          ))}
-        </Swiper>
+        {loading ? (
+          <div className="tst-skel-grid" aria-busy="true" aria-label="Loading testimonials">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <TestimonialCardSkeleton key={i} />
+            ))}
+          </div>
+        ) : testimonials.length === 0 ? (
+          <p className="tst-empty">Testimonials will appear here soon.</p>
+        ) : (
+          <Swiper
+            className="tst-swiper"
+            modules={[Pagination, Autoplay]}
+            spaceBetween={24}
+            slidesPerView={1}
+            grabCursor
+            loop={testimonials.length > 3}
+            autoplay={{ delay: 4500, disableOnInteraction: false }}
+            pagination={{ clickable: true }}
+            breakpoints={{
+              640: { slidesPerView: Math.min(2, testimonials.length) },
+              1024: { slidesPerView: Math.min(3, testimonials.length) },
+            }}
+          >
+            {testimonials.map((testimonial) => (
+              <SwiperSlide key={testimonial.id} className="tst-slide">
+                <TestimonialCard testimonial={testimonial} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        )}
       </div>
     </section>
   );

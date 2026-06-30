@@ -119,6 +119,10 @@ export default function AdminDashboard() {
             <strong>Package categories</strong>
             <span>Add or edit category tabs shown on the packages page.</span>
           </Link>
+          <Link to="/admin/testimonials" className="adm-quick">
+            <strong>Testimonials</strong>
+            <span>Add, edit or hide pilgrim reviews on the website.</span>
+          </Link>
           <Link to="/admin/submissions" className="adm-quick">
             <strong>Review submissions</strong>
             <span>Read enquiries, update statuses and contact pilgrims.</span>

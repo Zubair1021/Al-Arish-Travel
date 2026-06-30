@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import App from './App.jsx'
 import { SettingsProvider } from './context/SettingsContext.jsx'
 import { PackagesProvider } from './context/PackagesContext.jsx'
+import { TestimonialsProvider } from './context/TestimonialsContext.jsx'
 import { ToastProvider } from './context/ToastContext.jsx'
 import { ConfirmProvider } from './context/ConfirmContext.jsx'
 import './index.css'
@@ -21,6 +22,7 @@ const AdminLayout = lazy(() => import('./admin/AdminLayout.jsx'))
 const AdminDashboard = lazy(() => import('./admin/AdminDashboard.jsx'))
 const AdminPackages = lazy(() => import('./admin/AdminPackages.jsx'))
 const AdminCategories = lazy(() => import('./admin/AdminCategories.jsx'))
+const AdminTestimonials = lazy(() => import('./admin/AdminTestimonials.jsx'))
 const AdminSubmissions = lazy(() => import('./admin/AdminSubmissions.jsx'))
 const AdminSettings = lazy(() => import('./admin/AdminSettings.jsx'))
 
@@ -40,6 +42,7 @@ createRoot(document.getElementById('root')).render(
               <Route index element={<AdminDashboard />} />
               <Route path="packages" element={<AdminPackages />} />
               <Route path="categories" element={<AdminCategories />} />
+              <Route path="testimonials" element={<AdminTestimonials />} />
               <Route path="submissions" element={<AdminSubmissions />} />
               <Route path="settings" element={<AdminSettings />} />
             </Route>
@@ -50,11 +53,13 @@ createRoot(document.getElementById('root')).render(
             element={
             <SettingsProvider>
               <PackagesProvider>
+              <TestimonialsProvider>
                 <ToastProvider>
                   <ConfirmProvider theme="public">
                     <App />
                   </ConfirmProvider>
                 </ToastProvider>
+              </TestimonialsProvider>
               </PackagesProvider>
             </SettingsProvider>
             }

@@ -96,6 +96,17 @@ export default function AdminLogin() {
         </button>
 
         <p className="adm-login-foot">Authorised personnel only.</p>
+
+        <p className="adm-credit">
+          Developed by{' '}
+          <a
+            href="https://zubairdeveloper.tech/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            ZJ Developers
+          </a>
+        </p>
       </form>
     </div>
   )

@@ -65,6 +65,17 @@ export default function Footer() {
             <li><Link to="/atol">ATOL Protection</Link></li>
           </ul>
         </div>
+
+        <p className="ft-credit">
+          Developed by{' '}
+          <a
+            href="https://zubairdeveloper.tech/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            ZJ Developers
+          </a>
+        </p>
       </div>
     </footer>
   );

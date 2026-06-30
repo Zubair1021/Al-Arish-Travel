@@ -8,6 +8,7 @@ import categoryRoutes from "./src/routes/categories.js";
 import packageRoutes from "./src/routes/packages.js";
 import submissionRoutes from "./src/routes/submissions.js";
 import settingsRoutes from "./src/routes/settings.js";
+import testimonialRoutes from "./src/routes/testimonials.js";
 import { errorHandler, notFound } from "./src/middleware/errorHandler.js";
 
 const app = express();
@@ -36,6 +37,7 @@ app.use("/api/categories", categoryRoutes);
 app.use("/api/packages", packageRoutes);
 app.use("/api/submissions", submissionRoutes);
 app.use("/api/settings", settingsRoutes);
+app.use("/api/testimonials", testimonialRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

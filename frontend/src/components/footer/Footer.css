@@ -264,6 +264,26 @@
   color: var(--ft-gold-soft);
 }
 
+.ft-credit {
+  margin: 1rem 0 0;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(200, 162, 74, 0.1);
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--ft-muted);
+  letter-spacing: 0.2px;
+}
+.ft-credit a {
+  color: var(--ft-gold-soft);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+.ft-credit a:hover {
+  color: var(--ft-gold);
+  text-shadow: 0 0 20px rgba(200, 162, 74, 0.35);
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 900px) {
   .ft-brand {
@@ -290,5 +310,9 @@
   }
   .ft-legal {
     justify-content: center;
+  }
+  .ft-credit {
+    font-size: 0.75rem;
+    padding-top: 0.85rem;
   }
 }
